@@ -10,7 +10,7 @@ export default async function Navbar() {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Explicit
+            Digital Dashboard
           </Link>
           <div className="hidden md:flex items-center gap-4">
             <Link
@@ -37,12 +37,20 @@ export default async function Navbar() {
               <LogoutButton />
             </>
           ) : (
-            <Link
-              href="/login"
-              className="rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
-            >
-              Sign In
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link
+                href="/register"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+              >
+                Register
+              </Link>
+              <Link
+                href="/login"
+                className="rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+              >
+                Sign In
+              </Link>
+            </div>
           )}
         </div>
       </div>

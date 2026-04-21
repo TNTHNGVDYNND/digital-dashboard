@@ -3,14 +3,14 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import dbConnect from './db';
 import User from './models/User';
+import { authConfig } from './auth.config';
 
+/**
+ * Full auth config — Node.js modules (bcrypt, mongoose) are fine here.
+ * Used by API route handlers and server components. NOT used in proxy.ts.
+ */
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  session: {
-    strategy: 'jwt',
-  },
-  pages: {
-    signIn: '/login',
-  },
+  ...authConfig,
   providers: [
     CredentialsProvider({
       name: 'Credentials',

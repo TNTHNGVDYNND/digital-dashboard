@@ -2,11 +2,14 @@
 
 import { useState, FormEvent } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const justRegistered = searchParams.get('registered') === '1';
+  const requiresAuth = searchParams.get('reason') === 'auth';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -48,6 +51,18 @@ export default function LoginPage() {
             Welcome back to your campaign dashboard
           </p>
         </div>
+
+        {justRegistered && (
+          <div className="rounded-md bg-green-50 p-3 text-sm text-green-700 dark:bg-green-900/30 dark:text-green-400">
+            ✅ Account created successfully — sign in below.
+          </div>
+        )}
+
+        {requiresAuth && (
+          <div className="rounded-md bg-indigo-50 p-3 text-sm text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+            ℹ️ Please sign in to access the Campaign Builder.
+          </div>
+        )}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
@@ -104,6 +119,16 @@ export default function LoginPage() {
             >
               {isLoading ? 'Signing in...' : 'Sign in'}
             </button>
+          </div>
+
+          <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+            Don&apos;t have an account?{' '}
+            <Link
+              href="/register"
+              className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+            >
+              Sign up
+            </Link>
           </div>
 
           <div className="text-center text-sm">
