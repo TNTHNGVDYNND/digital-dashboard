@@ -1,8 +1,11 @@
 import Link from 'next/link';
+import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
 import LogoutButton from './LogoutButton';
 
 export default async function Navbar() {
+  // Force dynamic rendering on Vercel to prevent auth state caching
+  await headers();
   const session = await auth();
 
   return (

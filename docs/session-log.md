@@ -377,8 +377,26 @@ Old campaigns in MongoDB have **no `userId` field** and will not appear after th
 
 ---
 
-**Phase 2 Summary:** All security gaps closed, user-campaign ownership enforced, and full auth flow verified both by automated subagent and manual user testing.
+## [2026-04-21] Vercel Production Auth Fix ✅
 
-*Phase 2 Status: COMPLETE ✅*
-*Next Action: Maintenance & Phase 3 Planning*
+**Session Type:** Infrastructure fix (Production hardening)
+**Agent:** Antigravity (Gemini 3 Flash)
+**Status:** Production-ready auth confirmed
+
+### What Was Fixed
+
+#### 1. Sticky Sign-in / Missing Sign-out Button
+- **Cause**: Aggressive caching of the Navbar (Server Component) on Vercel's Edge.
+- **Fix**: Added explicit `headers()` call to `Navbar.tsx` to force dynamic rendering.
+- **Result**: Navbar correctly reflects auth state on every request.
+
+#### 2. Sign-out Reliability
+- **Cause**: Host header mismatch on Vercel preventing CSRF verification; stale client cache.
+- **Fix**: Enabled `trustHost: true` in `auth.ts` and forced `redirect: true` in `LogoutButton.tsx`.
+- **Result**: Sign-out clears cookies and reloads the app cleanly.
+
+---
+
+*Phase 2 Status: FULLY COMPLETE & PRODUCTION HARDENED ✅*
+*Next Action: Proceed to Phase 3 Planning*
 
