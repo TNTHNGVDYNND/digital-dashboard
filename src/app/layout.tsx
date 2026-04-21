@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import PreloaderWrapper from "@/components/PreloaderWrapper";
+import Navbar from "@/components/layout/Navbar";
 
 if (typeof window !== "undefined") {
   const originalWarn = console.warn;
@@ -24,9 +25,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <PreloaderWrapper>{children}</PreloaderWrapper>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
+        <PreloaderWrapper>
+          <Navbar />
+          <div className="pt-16">
+            {children}
+          </div>
+        </PreloaderWrapper>
       </body>
     </html>
   );

@@ -43,3 +43,31 @@ export async function createCampaign(campaignData: CampaignData) {
 
   return res.json();
 }
+
+export async function updateCampaign(id: string, updateData: Partial<CampaignData>) {
+  const res = await fetch(`/api/campaigns/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updateData),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to update campaign");
+  }
+
+  return res.json();
+}
+
+export async function deleteCampaign(id: string) {
+  const res = await fetch(`/api/campaigns/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to delete campaign");
+  }
+
+  return res.json();
+}

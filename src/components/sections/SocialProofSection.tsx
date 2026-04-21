@@ -32,6 +32,7 @@ export default function SocialProofSection() {
               <div
                 className="h-8 w-8 rounded-full"
                 style={{ backgroundColor: client.color }}
+                suppressHydrationWarning
               />
               <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">
                 {client.name}
