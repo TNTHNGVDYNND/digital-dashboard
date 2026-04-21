@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { create } from "zustand";
-import { createCampaign } from "@/hooks/useCampaigns";
+import { create } from 'zustand';
+import { createCampaign } from '@/hooks/useCampaigns';
 
-export type CampaignType = "social" | "influencer" | "traditional" | "mixed";
+export type CampaignType = 'social' | 'influencer' | 'traditional' | 'mixed';
 
 export interface CampaignData {
   name: string;
   type: CampaignType | null;
   targetAudience: {
     ageRange: [number, number];
-    gender: "all" | "male" | "female" | "other";
+    gender: 'all' | 'male' | 'female' | 'other';
     interests: string[];
     locations: string[];
   };
   budget: number;
-  tier: "basic" | "premium" | "enterprise";
+  tier: 'basic' | 'premium' | 'enterprise';
   duration: number;
   startDate: string | null;
 }
@@ -30,7 +30,7 @@ export interface CampaignState {
   prevStep: () => void;
   goToStep: (step: number) => void;
   updateCampaignData: (data: Partial<CampaignData>) => void;
-  updateTargetAudience: (data: Partial<CampaignData["targetAudience"]>) => void;
+  updateTargetAudience: (data: Partial<CampaignData['targetAudience']>) => void;
   submitCampaign: () => Promise<void>;
   reset: () => void;
   setError: (error: string | null) => void;
@@ -38,16 +38,16 @@ export interface CampaignState {
 }
 
 const initialCampaignData: CampaignData = {
-  name: "",
+  name: '',
   type: null,
   targetAudience: {
     ageRange: [18, 65],
-    gender: "all",
+    gender: 'all',
     interests: [],
     locations: [],
   },
   budget: 1000,
-  tier: "basic",
+  tier: 'basic',
   duration: 7,
   startDate: null,
 };
@@ -103,7 +103,7 @@ export const useCampaignStore = create<CampaignState>((set, get) => ({
         isSubmitting: false,
       });
     } catch {
-      set({ error: "Failed to submit campaign. Please try again." });
+      set({ error: 'Failed to submit campaign. Please try again.' });
       set({ isSubmitting: false });
     }
   },

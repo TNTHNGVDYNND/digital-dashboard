@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useCampaignStore } from "@/store/campaign";
-import SuccessModal from "./SuccessModal";
+import { useState } from 'react';
+import { useCampaignStore } from '@/store/campaign';
+import SuccessModal from './SuccessModal';
 
 export default function Step4Review() {
-  const { campaignData, submitCampaign, prevStep, isSubmitting, error, reset } =
-    useCampaignStore();
+  const { campaignData, submitCampaign, prevStep, isSubmitting, error, reset } = useCampaignStore();
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async () => {
@@ -39,7 +38,7 @@ export default function Step4Review() {
           <div className="flex justify-between border-b border-gray-100 py-3">
             <span className="text-gray-600">Target Audience</span>
             <span className="font-medium text-gray-900">
-              Ages {campaignData.targetAudience.ageRange.join("-")}, {" "}
+              Ages {campaignData.targetAudience.ageRange.join('-')},{' '}
               {campaignData.targetAudience.gender}
             </span>
           </div>
@@ -54,23 +53,19 @@ export default function Step4Review() {
           <div className="flex justify-between border-b border-gray-100 py-3">
             <span className="text-gray-600">Interests</span>
             <span className="font-medium text-gray-900">
-              {campaignData.targetAudience.interests.join(", ")}
+              {campaignData.targetAudience.interests.join(', ')}
             </span>
           </div>
           <div className="flex justify-between py-3">
             <span className="text-gray-600">Locations</span>
             <span className="font-medium text-gray-900">
-              {campaignData.targetAudience.locations.join(", ")}
+              {campaignData.targetAudience.locations.join(', ')}
             </span>
           </div>
         </div>
       </div>
 
-      {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-red-700">
-          {error}
-        </div>
-      )}
+      {error && <div className="rounded-lg bg-red-50 p-4 text-red-700">{error}</div>}
 
       <div className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-8">
         <button
@@ -87,7 +82,7 @@ export default function Step4Review() {
           disabled={isSubmitting}
           className="w-full sm:w-auto rounded-full bg-indigo-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
-          {isSubmitting ? "Launching..." : "Launch Campaign"}
+          {isSubmitting ? 'Launching...' : 'Launch Campaign'}
         </button>
       </div>
 

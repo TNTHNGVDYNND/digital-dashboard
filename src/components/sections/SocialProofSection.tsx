@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useFadeInUp } from "@/hooks/useGSAPAnimations";
+import { useFadeInUp } from '@/hooks/useGSAPAnimations';
 
 const clients = [
-  { name: "Spotify", color: "#1DB954" },
-  { name: "Netflix", color: "#E50914" },
-  { name: "Airbnb", color: "#FF5A5F" },
-  { name: "Slack", color: "#4A154B" },
-  { name: "Stripe", color: "#635BFF" },
-  { name: "Notion", color: "#000000" },
-  { name: "Figma", color: "#F24E1E" },
-  { name: "Discord", color: "#5865F2" },
+  { name: 'Spotify', color: '#1DB954' },
+  { name: 'Netflix', color: '#E50914' },
+  { name: 'Airbnb', color: '#FF5A5F' },
+  { name: 'Slack', color: '#4A154B' },
+  { name: 'Stripe', color: '#635BFF' },
+  { name: 'Notion', color: '#000000' },
+  { name: 'Figma', color: '#F24E1E' },
+  { name: 'Discord', color: '#5865F2' },
 ];
 
 export default function SocialProofSection() {
@@ -32,6 +32,7 @@ export default function SocialProofSection() {
               <div
                 className="h-8 w-8 rounded-full"
                 style={{ backgroundColor: client.color }}
+                suppressHydrationWarning
               />
               <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">
                 {client.name}

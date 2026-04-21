@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import Link from "next/link";
-import HeroScene from "../canvas/HeroScene";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import Link from 'next/link';
+import HeroScene from '../canvas/HeroScene';
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,7 +16,7 @@ export default function HeroSection() {
 
     const tl = gsap.timeline({ delay: 0.3 });
 
-    const titleWords = titleRef.current.querySelectorAll(".word");
+    const titleWords = titleRef.current.querySelectorAll('.word');
     tl.fromTo(
       titleWords,
       { opacity: 0, y: 40, rotateX: -90 },
@@ -26,22 +26,22 @@ export default function HeroSection() {
         rotateX: 0,
         duration: 0.8,
         stagger: 0.1,
-        ease: "power3.out",
-      }
+        ease: 'power3.out',
+      },
     );
 
     tl.fromTo(
       subtitleRef.current,
       { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      "-=0.3"
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+      '-=0.3',
     );
 
     tl.fromTo(
       ctaRef.current,
       { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      "-=0.3"
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+      '-=0.3',
     );
 
     return () => {
@@ -59,23 +59,19 @@ export default function HeroSection() {
           <h1
             ref={titleRef}
             className="mb-6 text-5xl font-bold leading-tight text-white md:text-7xl"
-            style={{ perspective: "1000px" }}
+            style={{ perspective: '1000px' }}
           >
-            <span className="word inline-block">Amplify</span>{" "}
-            <span className="word inline-block">Your</span>{" "}
+            <span className="word inline-block">Amplify</span>{' '}
+            <span className="word inline-block">Your</span>{' '}
             <span className="word inline-block text-indigo-400">Brand</span>
             <br />
-            <span className="word inline-block">With</span>{" "}
-            <span className="word inline-block">Strategic</span>{" "}
+            <span className="word inline-block">With</span>{' '}
+            <span className="word inline-block">Strategic</span>{' '}
             <span className="word inline-block text-indigo-400">Promotions</span>
           </h1>
 
-          <p
-            ref={subtitleRef}
-            className="mx-auto mb-8 max-w-2xl text-lg text-gray-300 md:text-xl"
-          >
-            Campaign management and promotions analytics dashboard for modern
-            marketing teams
+          <p ref={subtitleRef} className="mx-auto mb-8 max-w-2xl text-lg text-gray-300 md:text-xl">
+            Campaign management and promotions analytics dashboard for modern marketing teams
           </p>
 
           <div ref={ctaRef} className="flex flex-col gap-4 sm:flex-row">

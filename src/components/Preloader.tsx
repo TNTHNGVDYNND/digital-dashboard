@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import gsap from "gsap";
+import { useEffect, useState } from 'react';
+import gsap from 'gsap';
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -25,7 +25,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 onComplete: () => {
                   onComplete();
                 },
-              }
+              },
             );
           }, 300);
           return 100;
@@ -42,7 +42,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-500 ${
-        isFadingOut ? "pointer-events-none opacity-0" : "opacity-100"
+        isFadingOut ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
       <div className="w-full max-w-md px-8">

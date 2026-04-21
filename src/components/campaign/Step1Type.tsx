@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import { useCampaignStore, CampaignType } from "@/store/campaign";
+import { useCampaignStore, CampaignType } from '@/store/campaign';
 
 const campaignTypes: { type: CampaignType; label: string; description: string; icon: string }[] = [
   {
-    type: "social",
-    label: "Social Media",
-    description: "Promote on Instagram, Facebook, Twitter, and LinkedIn",
-    icon: "📱",
+    type: 'social',
+    label: 'Social Media',
+    description: 'Promote on Instagram, Facebook, Twitter, and LinkedIn',
+    icon: '📱',
   },
   {
-    type: "influencer",
-    label: "Influencer Marketing",
-    description: "Partner with content creators and influencers",
-    icon: "⭐",
+    type: 'influencer',
+    label: 'Influencer Marketing',
+    description: 'Partner with content creators and influencers',
+    icon: '⭐',
   },
   {
-    type: "traditional",
-    label: "Traditional Media",
-    description: "TV, radio, print, and outdoor advertising",
-    icon: "📺",
+    type: 'traditional',
+    label: 'Traditional Media',
+    description: 'TV, radio, print, and outdoor advertising',
+    icon: '📺',
   },
   {
-    type: "mixed",
-    label: "Mixed Campaign",
-    description: "Combine multiple channels for maximum reach",
-    icon: "🚀",
+    type: 'mixed',
+    label: 'Mixed Campaign',
+    description: 'Combine multiple channels for maximum reach',
+    icon: '🚀',
   },
 ];
 
@@ -46,8 +46,8 @@ export default function Step1Type() {
             onClick={() => updateCampaignData({ type: item.type })}
             className={`rounded-xl border-2 p-6 text-left transition-all ${
               campaignData.type === item.type
-                ? "border-indigo-600 bg-indigo-50"
-                : "border-gray-200 hover:border-indigo-300"
+                ? 'border-indigo-600 bg-indigo-50'
+                : 'border-gray-200 hover:border-indigo-300'
             }`}
           >
             <div className="mb-3 text-3xl">{item.icon}</div>
