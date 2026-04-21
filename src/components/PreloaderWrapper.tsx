@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import Preloader from "./Preloader";
-import { usePreloaderStore } from "@/store/preloader";
+import { useEffect, useState } from 'react';
+import Preloader from './Preloader';
+import { usePreloaderStore } from '@/store/preloader';
 
 interface PreloaderWrapperProps {
   children: React.ReactNode;

@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import PreloaderWrapper from "@/components/PreloaderWrapper";
-import Navbar from "@/components/layout/Navbar";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import PreloaderWrapper from '@/components/PreloaderWrapper';
+import Navbar from '@/components/layout/Navbar';
 
-if (typeof window !== "undefined") {
+if (typeof window !== 'undefined') {
   const originalWarn = console.warn;
   console.warn = (...args: unknown[]) => {
-    if (args[0]?.toString?.().includes?.("THREE.Clock")) return;
+    if (args[0]?.toString?.().includes?.('THREE.Clock')) return;
     originalWarn.apply(console, args);
   };
 }
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Explicit Promotions",
-  description: "Campaign management and promotions analytics dashboard",
+  title: 'Explicit Promotions',
+  description: 'Campaign management and promotions analytics dashboard',
 };
 
 export default function RootLayout({
@@ -29,9 +29,7 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning>
         <PreloaderWrapper>
           <Navbar />
-          <div className="pt-16">
-            {children}
-          </div>
+          <div className="pt-16">{children}</div>
         </PreloaderWrapper>
       </body>
     </html>

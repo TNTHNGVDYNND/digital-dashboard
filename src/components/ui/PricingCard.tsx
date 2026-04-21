@@ -20,9 +20,9 @@ export default function PricingCard({
       onClick={onSelect}
       className={`relative cursor-pointer rounded-2xl border-2 p-6 transition-all duration-200 ${
         isSelected
-          ? "border-indigo-600 bg-indigo-50"
-          : "border-gray-200 bg-white hover:border-indigo-300"
-      } ${recommended ? "ring-2 ring-indigo-600 ring-offset-2" : ""}`}
+          ? 'border-indigo-600 bg-indigo-50'
+          : 'border-gray-200 bg-white hover:border-indigo-300'
+      } ${recommended ? 'ring-2 ring-indigo-600 ring-offset-2' : ''}`}
     >
       {recommended && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white">

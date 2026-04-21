@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useFadeInUp } from "@/hooks/useGSAPAnimations";
-import Link from "next/link";
+import { useFadeInUp } from '@/hooks/useGSAPAnimations';
+import Link from 'next/link';
 
 export default function CTASection() {
   const sectionRef = useFadeInUp();
@@ -16,8 +16,8 @@ export default function CTASection() {
           Ready to Amplify Your Reach?
         </h2>
         <p className="mx-auto mb-8 max-w-2xl text-lg text-white/80">
-          Join thousands of brands using Explicit Promotions to connect with
-          their audience and drive measurable results.
+          Join thousands of brands using Explicit Promotions to connect with their audience and
+          drive measurable results.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -35,9 +35,7 @@ export default function CTASection() {
           </Link>
         </div>
 
-        <p className="mt-6 text-sm text-white/60">
-          No credit card required. 14-day free trial.
-        </p>
+        <p className="mt-6 text-sm text-white/60">No credit card required. 14-day free trial.</p>
       </div>
     </section>
   );

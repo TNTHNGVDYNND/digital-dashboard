@@ -1,4 +1,4 @@
-import CampaignBuilder from "@/components/campaign/CampaignBuilder";
+import CampaignBuilder from '@/components/campaign/CampaignBuilder';
 
 export default function CampaignsPage() {
   return (

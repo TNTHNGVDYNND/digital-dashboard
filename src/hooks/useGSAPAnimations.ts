@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 let scrollTriggerRegistered = false;
 
 function ensureScrollTrigger() {
-  if (!scrollTriggerRegistered && typeof window !== "undefined") {
-    const { ScrollTrigger } = require("gsap/ScrollTrigger");
+  if (!scrollTriggerRegistered && typeof window !== 'undefined') {
+    const { ScrollTrigger } = require('gsap/ScrollTrigger');
     gsap.registerPlugin(ScrollTrigger);
     scrollTriggerRegistered = true;
   }
@@ -25,7 +25,7 @@ interface UseScrollAnimationOptions {
 
 export function useScrollAnimation(
   animationCallback: (tl: gsap.core.Timeline) => void,
-  options: UseScrollAnimationOptions = {}
+  options: UseScrollAnimationOptions = {},
 ) {
   const elementRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -34,13 +34,13 @@ export function useScrollAnimation(
     if (!elementRef.current) return;
 
     ensureScrollTrigger();
-    const { ScrollTrigger } = require("gsap/ScrollTrigger");
+    const { ScrollTrigger } = require('gsap/ScrollTrigger');
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: options.trigger || elementRef.current,
-        start: options.start || "top 80%",
-        end: options.end || "bottom 20%",
+        start: options.start || 'top 80%',
+        end: options.end || 'bottom 20%',
         scrub: options.scrub || false,
         markers: options.markers || false,
         onEnter: options.onEnter,
@@ -53,7 +53,7 @@ export function useScrollAnimation(
 
     return () => {
       tl.kill();
-      const ST = require("gsap/ScrollTrigger").ScrollTrigger;
+      const ST = require('gsap/ScrollTrigger').ScrollTrigger;
       type ScrollTriggerInstance = { trigger: Element | null; kill: () => void };
       ST.getAll().forEach((st: ScrollTriggerInstance) => {
         if (st.trigger === elementRef.current) {
@@ -73,7 +73,7 @@ export function useFadeInUp() {
     if (!elementRef.current) return;
 
     ensureScrollTrigger();
-    const { ScrollTrigger } = require("gsap/ScrollTrigger");
+    const { ScrollTrigger } = require('gsap/ScrollTrigger');
 
     gsap.set(elementRef.current, { opacity: 0, y: 30 });
 
@@ -81,11 +81,11 @@ export function useFadeInUp() {
       opacity: 1,
       y: 0,
       duration: 0.6,
-      ease: "power2.out",
+      ease: 'power2.out',
       scrollTrigger: {
         trigger: elementRef.current,
-        start: "top 85%",
-        toggleActions: "play none none reverse",
+        start: 'top 85%',
+        toggleActions: 'play none none reverse',
       },
     });
 

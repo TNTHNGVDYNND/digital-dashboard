@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { auth } from "@/lib/auth";
-import LogoutButton from "./LogoutButton";
+import Link from 'next/link';
+import { auth } from '@/lib/auth';
+import LogoutButton from './LogoutButton';
 
 export default async function Navbar() {
   const session = await auth();
@@ -13,7 +13,10 @@ export default async function Navbar() {
             Explicit
           </Link>
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/campaigns" className="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+            <Link
+              href="/campaigns"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+            >
               Create Campaign
             </Link>
           </div>
@@ -22,7 +25,10 @@ export default async function Navbar() {
         <div className="flex items-center gap-4">
           {session ? (
             <>
-              <Link href="/dashboard" className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+              <Link
+                href="/dashboard"
+                className="text-sm font-medium text-indigo-600 dark:text-indigo-400"
+              >
                 Dashboard
               </Link>
               <div className="hidden sm:block text-sm text-gray-500 dark:text-gray-400">

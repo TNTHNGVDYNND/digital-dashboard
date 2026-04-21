@@ -4,11 +4,7 @@ interface StepIndicatorProps {
   labels: string[];
 }
 
-export default function StepIndicator({
-  currentStep,
-  totalSteps,
-  labels,
-}: StepIndicatorProps) {
+export default function StepIndicator({ currentStep, totalSteps, labels }: StepIndicatorProps) {
   return (
     <div className="w-full">
       <div className="mb-2 flex justify-between">
@@ -16,9 +12,7 @@ export default function StepIndicator({
           <div
             key={index}
             className={`text-center text-sm ${
-              index <= currentStep
-                ? "font-medium text-indigo-600"
-                : "text-gray-400"
+              index <= currentStep ? 'font-medium text-indigo-600' : 'text-gray-400'
             }`}
           >
             {label}

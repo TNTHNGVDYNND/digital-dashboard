@@ -1,28 +1,21 @@
-"use client";
+'use client';
 
-import { useCampaignStore } from "@/store/campaign";
+import { useCampaignStore } from '@/store/campaign';
 
 const interests = [
-  "Technology",
-  "Fashion",
-  "Food & Dining",
-  "Travel",
-  "Fitness",
-  "Entertainment",
-  "Sports",
-  "Finance",
-  "Education",
-  "Gaming",
+  'Technology',
+  'Fashion',
+  'Food & Dining',
+  'Travel',
+  'Fitness',
+  'Entertainment',
+  'Sports',
+  'Finance',
+  'Education',
+  'Gaming',
 ];
 
-const locations = [
-  "New York",
-  "Los Angeles",
-  "Chicago",
-  "Houston",
-  "Phoenix",
-  "Global",
-];
+const locations = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Global'];
 
 export default function Step2Audience() {
   const { campaignData, updateCampaignData, updateTargetAudience, nextStep, prevStep } =
@@ -99,7 +92,11 @@ export default function Step2Audience() {
             <label className="mb-2 block text-sm font-medium text-gray-700">Gender</label>
             <select
               value={campaignData.targetAudience.gender}
-              onChange={(e) => updateTargetAudience({ gender: e.target.value as typeof campaignData.targetAudience.gender })}
+              onChange={(e) =>
+                updateTargetAudience({
+                  gender: e.target.value as typeof campaignData.targetAudience.gender,
+                })
+              }
               className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:outline-none"
             >
               <option value="all">All Genders</option>
@@ -121,8 +118,8 @@ export default function Step2Audience() {
                 onClick={() => toggleInterest(interest)}
                 className={`rounded-full px-4 py-2 text-sm transition-colors ${
                   campaignData.targetAudience.interests.includes(interest)
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 {interest}
@@ -142,8 +139,8 @@ export default function Step2Audience() {
                 onClick={() => toggleLocation(location)}
                 className={`rounded-full px-4 py-2 text-sm transition-colors ${
                   campaignData.targetAudience.locations.includes(location)
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 {location}

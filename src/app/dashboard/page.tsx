@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useCampaigns, updateCampaign, deleteCampaign } from "@/hooks/useCampaigns";
-import type { ICampaign } from "@/lib/models/Campaign";
-import AnalyticsChart from "@/components/dashboard/AnalyticsChart";
-import CampaignEditModal from "@/components/dashboard/CampaignEditModal";
-import CampaignDeleteModal from "@/components/dashboard/CampaignDeleteModal";
-import Link from "next/link";
+import { useState } from 'react';
+import { useCampaigns, updateCampaign, deleteCampaign } from '@/hooks/useCampaigns';
+import type { ICampaign } from '@/lib/models/Campaign';
+import AnalyticsChart from '@/components/dashboard/AnalyticsChart';
+import CampaignEditModal from '@/components/dashboard/CampaignEditModal';
+import CampaignDeleteModal from '@/components/dashboard/CampaignDeleteModal';
+import Link from 'next/link';
 
 export default function DashboardPage() {
   const { campaigns, isLoading, isError, mutate } = useCampaigns();
-  
+
   // Modal State
   const [editingCampaign, setEditingCampaign] = useState<ICampaign | null>(null);
   const [deletingCampaign, setDeletingCampaign] = useState<ICampaign | null>(null);
@@ -56,23 +56,32 @@ export default function DashboardPage() {
         ) : hasCampaigns ? (
           <>
             <AnalyticsChart campaigns={campaigns} />
-          
+
             <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-              <h2 className="mb-6 text-xl font-semibold text-gray-900 dark:text-white">Your Campaigns</h2>
+              <h2 className="mb-6 text-xl font-semibold text-gray-900 dark:text-white">
+                Your Campaigns
+              </h2>
               <div className="grid gap-4">
                 {campaigns.map((campaign: ICampaign) => (
-                  <div key={campaign._id as unknown as string} className="group flex items-center justify-between rounded-lg border border-gray-100 p-4 transition-colors hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600">
+                  <div
+                    key={campaign._id as unknown as string}
+                    className="group flex items-center justify-between rounded-lg border border-gray-100 p-4 transition-colors hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
+                  >
                     <div>
                       <h3 className="font-medium text-gray-900 dark:text-white">{campaign.name}</h3>
-                      <p className="text-sm text-gray-500 capitalize">{campaign.type} • {campaign.tier} tier</p>
+                      <p className="text-sm text-gray-500 capitalize">
+                        {campaign.type} • {campaign.tier} tier
+                      </p>
                     </div>
-                    
+
                     <div className="flex items-center gap-6">
                       <div className="text-right">
-                        <div className="font-semibold text-indigo-600">${campaign.budget.toLocaleString()}</div>
+                        <div className="font-semibold text-indigo-600">
+                          ${campaign.budget.toLocaleString()}
+                        </div>
                         <div className="text-sm text-gray-500">{campaign.duration} days</div>
                       </div>
-                      
+
                       {/* CRUD Actions */}
                       <div className="flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
                         <button
@@ -103,7 +112,8 @@ export default function DashboardPage() {
               No campaigns yet
             </h2>
             <p className="mb-6 max-w-sm text-sm text-gray-600 dark:text-gray-400">
-              You haven't created any promotional campaigns yet. Start your first campaign to see analytics here.
+              You haven't created any promotional campaigns yet. Start your first campaign to see
+              analytics here.
             </p>
             <Link
               href="/campaigns"
@@ -123,7 +133,7 @@ export default function DashboardPage() {
           onSave={handleEditSave}
         />
       )}
-      
+
       {deletingCampaign && (
         <CampaignDeleteModal
           campaign={deletingCampaign}

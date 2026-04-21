@@ -1,30 +1,24 @@
-"use client";
+'use client';
 
-import { useScrollAnimation } from "@/hooks/useGSAPAnimations";
-import gsap from "gsap";
+import { useScrollAnimation } from '@/hooks/useGSAPAnimations';
+import gsap from 'gsap';
 
 export default function AnalyticsMapSection() {
   const sectionRef = useScrollAnimation((tl) => {
     tl.fromTo(
-      ".map-container",
+      '.map-container',
       { opacity: 0, scale: 0.95 },
-      { opacity: 1, scale: 1, duration: 0.8, ease: "power2.out" }
+      { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' },
     );
   });
 
   return (
-    <section
-      ref={sectionRef}
-      className="bg-gray-900 px-4 py-24 text-white"
-    >
+    <section ref={sectionRef} className="bg-gray-900 px-4 py-24 text-white">
       <div className="container mx-auto">
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-            Global Reach Analytics
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">Global Reach Analytics</h2>
           <p className="mx-auto max-w-2xl text-gray-400">
-            Track your campaign performance across regions and demographics in
-            real-time.
+            Track your campaign performance across regions and demographics in real-time.
           </p>
         </div>
 
@@ -56,15 +50,7 @@ export default function AnalyticsMapSection() {
   );
 }
 
-function StatCard({
-  label,
-  value,
-  change,
-}: {
-  label: string;
-  value: string;
-  change: string;
-}) {
+function StatCard({ label, value, change }: { label: string; value: string; change: string }) {
   return (
     <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-6 text-center">
       <div className="mb-1 text-3xl font-bold text-white">{value}</div>

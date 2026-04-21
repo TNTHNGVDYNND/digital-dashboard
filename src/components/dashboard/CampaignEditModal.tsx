@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import type { ICampaign } from "@/lib/models/Campaign";
+import { useState } from 'react';
+import type { ICampaign } from '@/lib/models/Campaign';
 
 interface CampaignEditModalProps {
   campaign: ICampaign;
@@ -10,7 +10,12 @@ interface CampaignEditModalProps {
   onSave: (id: string, name: string) => Promise<void>;
 }
 
-export default function CampaignEditModal({ campaign, isOpen, onClose, onSave }: CampaignEditModalProps) {
+export default function CampaignEditModal({
+  campaign,
+  isOpen,
+  onClose,
+  onSave,
+}: CampaignEditModalProps) {
   const [name, setName] = useState(campaign.name);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -55,7 +60,7 @@ export default function CampaignEditModal({ campaign, isOpen, onClose, onSave }:
               disabled={isSaving}
               className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
             >
-              {isSaving ? "Saving..." : "Save Changes"}
+              {isSaving ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
         </form>

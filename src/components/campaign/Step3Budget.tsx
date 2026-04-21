@@ -1,44 +1,39 @@
-"use client";
+'use client';
 
-import { useCampaignStore } from "@/store/campaign";
-import PricingCard from "@/components/ui/PricingCard";
+import { useCampaignStore } from '@/store/campaign';
+import PricingCard from '@/components/ui/PricingCard';
 
 const tiers = [
   {
-    id: "basic" as const,
-    title: "Basic",
+    id: 'basic' as const,
+    title: 'Basic',
     price: 999,
-    features: [
-      "Up to 50K reach",
-      "1 social platform",
-      "Basic analytics",
-      "Email support",
-    ],
+    features: ['Up to 50K reach', '1 social platform', 'Basic analytics', 'Email support'],
     recommended: false,
   },
   {
-    id: "premium" as const,
-    title: "Premium",
+    id: 'premium' as const,
+    title: 'Premium',
     price: 2499,
     features: [
-      "Up to 200K reach",
-      "3 social platforms",
-      "Advanced analytics",
-      "Priority support",
-      "A/B testing",
+      'Up to 200K reach',
+      '3 social platforms',
+      'Advanced analytics',
+      'Priority support',
+      'A/B testing',
     ],
     recommended: true,
   },
   {
-    id: "enterprise" as const,
-    title: "Enterprise",
+    id: 'enterprise' as const,
+    title: 'Enterprise',
     price: 4999,
     features: [
-      "Unlimited reach",
-      "All platforms",
-      "Real-time analytics",
-      "Dedicated manager",
-      "Custom integrations",
+      'Unlimited reach',
+      'All platforms',
+      'Real-time analytics',
+      'Dedicated manager',
+      'Custom integrations',
     ],
     recommended: false,
   },
@@ -47,7 +42,9 @@ const tiers = [
 export default function Step3Budget() {
   const { campaignData, updateCampaignData, nextStep, prevStep } = useCampaignStore();
 
-  const estimatedReach = campaignData.budget * (campaignData.tier === "enterprise" ? 150 : campaignData.tier === "premium" ? 100 : 50);
+  const estimatedReach =
+    campaignData.budget *
+    (campaignData.tier === 'enterprise' ? 150 : campaignData.tier === 'premium' ? 100 : 50);
 
   return (
     <div className="space-y-6">

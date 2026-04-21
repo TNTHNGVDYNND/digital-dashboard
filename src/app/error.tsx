@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export default function GlobalError({
   error,
@@ -23,7 +23,8 @@ export default function GlobalError({
           Something went wrong
         </h2>
         <p className="mb-8 text-sm text-gray-600 dark:text-gray-400">
-          We apologize for the inconvenience. An unexpected error occurred while processing your request.
+          We apologize for the inconvenience. An unexpected error occurred while processing your
+          request.
         </p>
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
           <button
