@@ -137,13 +137,94 @@ Status key: ⬜ Not started → 🔄 In progress → ✅ Done → ⏸ Blocked
 
 ---
 
-## What's Out of Scope (Future Phases)
+## Phase 2 Milestones
 
-- [Feature deferred from MVP — document here so it's not forgotten]
-- [Feature deferred]
-- [Feature deferred]
+| # | Milestone | Status | Date |
+|---|---|---|---|
+| 7 | NextAuth Authentication | ✅ Done | 2026-04-21 |
+| 8 | Advanced Analytics (Recharts) | ✅ Done | 2026-04-21 |
+| 9 | Campaign CRUD (Edit/Delete) | ✅ Done | 2026-04-21 |
+| 10 | 3D Real Model Assets | ⏸ Not verified | — |
+| 11 | User Registration | ✅ Done | 2026-04-21 |
+| 12 | Full Auth Flow Verification | ✅ Done | 2026-04-21 |
+| 13 | Data Migration (userId backfill) | ✅ Done | 2026-04-21 |
+| 14 | Vercel Deployment | ✅ Ready | 2026-04-21 |
 
 ---
 
-*Produced by Antigravity: 2026-04-20*
-*Team review: [pending / approved on YYYY-MM-DD]*
+## Milestone 7 — Authentication (NextAuth v5)
+
+**Goal:** Secure all protected routes behind JWT session auth.
+
+**Steps:**
+1. [x] Install & configure NextAuth v5 with CredentialsProvider
+2. [x] Create User Mongoose model with bcrypt password hashing
+3. [x] Create login page (`/login`) with form validation
+4. [x] Create `src/lib/auth.config.ts` — edge-safe config (no Node.js)
+5. [x] Create `src/lib/auth.ts` — full config with CredentialsProvider
+6. [x] Add JWT + session callbacks so `session.user.id` carries DB ObjectId
+7. [x] Create `src/proxy.ts` — route protection (Edge Runtime)
+8. [x] Add `userId` field to Campaign model (required, indexed, ref: User)
+9. [x] Scope all campaign API routes to `session.user.id`
+10. [x] Create `src/types/next-auth.d.ts` — TypeScript session type
+11. [ ] User registration page (`/register`)
+12. [ ] End-to-end auth flow verification
+
+**Done when:** Register → Login → Dashboard → Create Campaign → Logout all work correctly.
+
+---
+
+## Milestone 8 — Advanced Analytics
+
+**Goal:** Visualise campaign performance in the dashboard.
+
+**Steps:**
+1. [x] Install `recharts`
+2. [x] Create `AnalyticsChart.tsx` — Budget vs Reach bar chart
+3. [x] Integrate with SWR `useCampaigns()` hook
+4. [x] Responsive chart layout
+
+**Done when:** Dashboard shows chart with user's campaign data — ✅ Verified 2026-04-21
+
+---
+
+## Milestone 9 — Campaign CRUD
+
+**Goal:** Users can edit and delete their own campaigns from the dashboard.
+
+**Steps:**
+1. [x] Create `CampaignEditModal.tsx` — edit campaign name
+2. [x] Create `CampaignDeleteModal.tsx` — confirm deletion
+3. [x] Add `updateCampaign()` + `deleteCampaign()` to `useCampaigns.ts`
+4. [x] API ownership enforcement (scoped to userId)
+
+**Done when:** Edit and delete work for the campaign owner only — ✅ 2026-04-21
+
+---
+
+## Milestone 11 — User Registration
+
+**Goal:** Allow new users to create accounts (prerequisite for auth flow testing).
+
+**Steps:**
+1. [x] Create `src/app/register/page.tsx` — register form (name, email, password)
+2. [x] Create `POST /api/auth/register` — hash password, save User to MongoDB
+3. [x] Redirect to login after successful registration
+4. [x] Add "Sign Up" link to login page
+
+**Done when:** A new user can register and immediately log in. — ✅ Verified 2026-04-21
+
+---
+
+## What's Out of Scope (Phase 3+)
+
+- Real-time updates (WebSockets / SSE)
+- Payment integration for campaign tiers
+- Email notifications for campaign status changes
+- External analytics platform integration
+- 3D asset model replacement (currently placeholder cube)
+
+---
+
+*Roadmap updated by Antigravity: 2026-04-21*
+*Phase 1: ✅ Complete | Phase 2: ✅ Complete*

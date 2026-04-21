@@ -14,8 +14,33 @@ export default function DashboardPage() {
   // Modal State
   const [editingCampaign, setEditingCampaign] = useState<ICampaign | null>(null);
   const [deletingCampaign, setDeletingCampaign] = useState<ICampaign | null>(null);
+  const [isMigrating, setIsMigrating] = useState(false);
+  const [migrationStatus, setMigrationStatus] = useState<string | null>(null);
 
   const hasCampaigns = campaigns && campaigns.length > 0;
+
+  const handleMigrate = async () => {
+    setIsMigrating(true);
+    setMigrationStatus(null);
+    try {
+      const res = await fetch('/api/admin/migrate', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        if (data.count > 0) {
+          setMigrationStatus(`Success! Found and migrated ${data.count} campaigns.`);
+          mutate(); // Re-fetch data
+        } else {
+          setMigrationStatus('No legacy campaigns found to migrate.');
+        }
+      } else {
+        setMigrationStatus(`Migration failed: ${data.error}`);
+      }
+    } catch (err) {
+      setMigrationStatus('An error occurred during migration.');
+    } finally {
+      setIsMigrating(false);
+    }
+  };
 
   const handleEditSave = async (id: string, name: string) => {
     try {
@@ -115,12 +140,28 @@ export default function DashboardPage() {
               You haven't created any promotional campaigns yet. Start your first campaign to see
               analytics here.
             </p>
-            <Link
-              href="/campaigns"
-              className="rounded-full bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
-            >
-              Create Campaign
-            </Link>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <Link
+                href="/campaigns"
+                className="rounded-full bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+              >
+                Create Campaign
+              </Link>
+
+              <button
+                onClick={handleMigrate}
+                disabled={isMigrating}
+                className="rounded-full border border-gray-300 bg-white px-6 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+              >
+                {isMigrating ? 'Checking...' : 'Migrate Legacy Data'}
+              </button>
+            </div>
+
+            {migrationStatus && (
+              <p className="mt-4 text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                {migrationStatus}
+              </p>
+            )}
           </div>
         )}
       </div>

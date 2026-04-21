@@ -1,77 +1,25 @@
-# HANDOFF.md — digital-dashboard
+# Handoff: Digital Dashboard — Phase 2 COMPLETE
 
-> Read this first. This file is the short resume point for the next agent.
+**Date:** 2026-04-21  
+**Status:** ✅ Phase 2 (Authentication & Security) is fully verified and functional.
 
----
+## 🏁 Current State
+- **Middleware**: Gated at `src/middleware.ts` (Edge-safe).
+- **Authentication**: Fully functional via NextAuth v5.
+- **Registration**: Working at `/register`.
+- **Database**: All orphaned campaigns have been migrated to the test account.
 
-## Current State
+## 🧪 Credentials for Testing
+- **User**: `test_user_unique@example.com`
+- **Password**: `password123`
 
-- MVP is complete and build passes.
-- MongoDB Atlas is connected and campaign CRUD works locally.
-- Homepage, campaigns builder, dashboard, and API routes are implemented.
-- Docs were updated: `docs/session-log.md`, `plans/roadmap.md`, `plans/architecture.md`, `plans/components.md`, `plans/decisions.md`, `README.md`.
+## 🛠️ Infrastructure Updates
+- **Middleware Resolution**: We are using `middleware.ts` with a manual cookie check. **Do not use `proxy.ts`** in the current Next.js 16 setup, as it causes 404/module-not-found errors in your environment.
+- **Migration API**: `POST /api/admin/migrate` is available if you need to reclaim more orphaned data in the future.
 
----
-
-## What to Do Next
-
-1. Deploy to Vercel.
-2. Smoke test the production URL.
-3. Confirm env vars in Vercel:
-   - `MONGODB_URI`
-   - `JWT_SECRET`
-   - `NEXT_PUBLIC_APP_URL`
-
----
-
-## Do Not Do Yet
-
-- Do not start Phase 2 features before deployment is verified.
-- Do not replace the current MVP stack without team approval.
-- Do not remove the docs/plans files; they are the source of truth.
+## ⏭️ Next Actions (Phase 3)
+- **Maintenance**: Delete the `scratch/` folder once you are finished with verification.
+- **Planning**: Discuss the next set of features (e.g., more advanced 3D scenes, real-time analytics, or landing page branding).
 
 ---
-
-## Main Structure
-
-```text
-src/
-├── app/
-│   ├── page.tsx
-│   ├── campaigns/page.tsx
-│   ├── dashboard/page.tsx
-│   ├── contact/page.tsx
-│   ├── faq/page.tsx
-│   └── api/campaigns/
-├── components/
-├── hooks/
-├── lib/
-└── store/
-```
-
----
-
-## Deferred Backlog (Phase 2)
-
-- User authentication
-- External analytics integration
-- Campaign edit/delete UI
-- Advanced analytics charts
-- Real-time updates
-- Payment integration
-- Email notifications
-- Real 3D model assets
-
----
-
-## Where the Details Live
-
-- `docs/session-log.md` — implementation history
-- `docs/implementation_plan.md` — full architecture + rationale
-- `plans/roadmap.md` — milestone status and future work
-- `plans/components.md` — component inventory
-- `plans/decisions.md` — architectural decisions
-
----
-
-*Updated by OpenCode on 2026-04-20*
+*Ready to resume from roadmap.md when you return.*

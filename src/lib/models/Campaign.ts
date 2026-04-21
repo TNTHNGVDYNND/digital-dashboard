@@ -1,10 +1,11 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 
 export type CampaignType = 'social' | 'influencer' | 'traditional' | 'mixed';
 export type CampaignTier = 'basic' | 'premium' | 'enterprise';
 export type CampaignGender = 'all' | 'male' | 'female' | 'other';
 
 export interface ICampaign extends Document {
+  userId: Types.ObjectId;
   name: string;
   type: CampaignType;
   targetAudience: {
@@ -23,6 +24,12 @@ export interface ICampaign extends Document {
 
 const CampaignSchema: Schema = new Schema(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
     name: { type: String, required: true },
     type: {
       type: String,
