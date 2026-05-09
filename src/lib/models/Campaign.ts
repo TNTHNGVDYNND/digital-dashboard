@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 export type CampaignType = 'social' | 'influencer' | 'traditional' | 'mixed';
 export type CampaignTier = 'basic' | 'premium' | 'enterprise';
 export type CampaignGender = 'all' | 'male' | 'female' | 'other';
+export type CampaignStatus = 'draft' | 'active' | 'paused' | 'completed';
 
 export interface ICampaign extends Document {
   userId: Types.ObjectId;
@@ -18,6 +19,7 @@ export interface ICampaign extends Document {
   tier: CampaignTier;
   duration: number;
   startDate?: Date;
+  status: CampaignStatus;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -54,6 +56,11 @@ const CampaignSchema: Schema = new Schema(
     },
     duration: { type: Number, required: true },
     startDate: { type: Date },
+    status: {
+      type: String,
+      enum: ['draft', 'active', 'paused', 'completed'],
+      default: 'active',
+    },
   },
   {
     timestamps: true,
