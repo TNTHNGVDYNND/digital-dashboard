@@ -3,9 +3,8 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 export type CampaignType = 'social' | 'influencer' | 'traditional' | 'mixed';
 export type CampaignTier = 'basic' | 'premium' | 'enterprise';
 export type CampaignGender = 'all' | 'male' | 'female' | 'other';
-export type CampaignStatus = 'draft' | 'active' | 'paused' | 'completed';
 
-export interface ICampaign extends Document {
+export interface ITemplate extends Document {
   userId: Types.ObjectId;
   name: string;
   type: CampaignType;
@@ -19,12 +18,11 @@ export interface ICampaign extends Document {
   tier: CampaignTier;
   duration: number;
   startDate?: Date;
-  status: CampaignStatus;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const CampaignSchema: Schema = new Schema(
+const TemplateSchema: Schema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -56,15 +54,10 @@ const CampaignSchema: Schema = new Schema(
     },
     duration: { type: Number, required: true },
     startDate: { type: Date },
-    status: {
-      type: String,
-      enum: ['draft', 'active', 'paused', 'completed'],
-      default: 'active',
-    },
   },
   {
     timestamps: true,
   },
 );
 
-export default mongoose.models.Campaign || mongoose.model<ICampaign>('Campaign', CampaignSchema);
+export default mongoose.models.Template || mongoose.model<ITemplate>('Template', TemplateSchema);

@@ -1,0 +1,15 @@
+{
+  "decision": "WARNING",
+  "artifact_path": "/home/vladi/developer/digital-dashboard/.sisyphus/plans/saved-filters.md",
+  "summary": "Six previously reported blockers are fixed, but popover open-state ownership is still not explicitly controlled by page.tsx.",
+  "blockers": [
+    {
+      "id": "D-2",
+      "severity": "MAJOR",
+      "category": "Dependency Gap",
+      "title": "Popover state ownership still ambiguous",
+      "fix": "Add explicit controlled popover-open props to FilterToolbar and restate that src/app/dashboard/page.tsx owns popover state and passes it down."
+    }
+  ],
+  "next_action": "user_decision"
+}

@@ -1,0 +1,56 @@
+# Slice 1.4 Evidence: Deploy-Time Backfill Script
+
+## Changes
+- Created `scripts/backfill-status.ts` — idempotent backfill script
+
+## Build Verification
+```
+✓ Compiled successfully in 6.3s
+  Running TypeScript ...
+  Finished TypeScript in 4.6s ...
+✓ Generating static pages using 11 workers (14/14) in 285ms
+```
+
+## TypeScript Verification
+```
+npx tsc --noEmit --project tsconfig.json
+(no output — zero errors)
+```
+
+## Script Design
+- Connects to MongoDB via existing `dbConnect()`
+- Finds campaigns where `status` is missing or null: `{ $or: [{ status: { $exists: false } }, { status: null }] }`
+- Updates matched documents with `$set: { status: 'active' }`
+- Emits audit log with `startTime`, `endTime`, `matchedCount`, `modifiedCount`, `failures`
+- Idempotent: re-running finds 0 matched documents if all are already backfilled
+- Exits with code 1 on failure, code 0 on success
+
+## PRD Compliance
+- [x] Script is idempotent (query only matches docs missing status)
+- [x] Updates only documents missing `status`
+- [x] Emits audit log with start time, end time, matched count, modified count, failures
+- [x] Uses existing `dbConnect` and `Campaign` model patterns
+- [x] Build passes with zero TypeScript errors
+- [x] Script type-checks cleanly
+
+## Note on Execution
+The `.env.local` points to a remote MongoDB Atlas cluster. The script was NOT executed against the live database to avoid unintended mutations. It is ready to run during deployment with:
+```bash
+npx tsx scripts/backfill-status.ts
+```
+
+## Goal-Backward Verification
+
+**Slice Goal:** Legacy campaigns receive `status: 'active'` safely; rerunning produces no duplicate effects
+
+| # | Truth (Observable Behavior) | Artifacts | Wiring | Status |
+|---|------------------------------|-----------|--------|--------|
+| 1 | Script finds only campaigns missing status | `scripts/backfill-status.ts` | Query uses `$exists: false` and `null` check | ✓ VERIFIED |
+| 2 | Script sets status to 'active' | `scripts/backfill-status.ts` | `$set: { status: 'active' }` | ✓ VERIFIED |
+| 3 | Script emits structured audit log | `scripts/backfill-status.ts` | JSON audit log with all required fields | ✓ VERIFIED |
+| 4 | Re-running is idempotent | `scripts/backfill-status.ts` | Query won't match docs that already have status | ✓ VERIFIED |
+| 5 | Script type-checks and compiles | TypeScript + build output | Zero errors | ✓ VERIFIED |
+
+**Anti-patterns:** None
+
+**Overall Status:** passed

@@ -1,0 +1,32 @@
+# Slice 2.4 Evidence: Zustand Store
+
+**Date:** 2026-05-09
+**Slice:** 2.4
+
+## Build Verification
+- Command: `npm run build`
+- Result: PASS (compiled successfully, TypeScript clean, static pages generated)
+
+## Files Created
+- `src/store/filters.ts`
+
+## PRD Compliance Checklist
+- [x] Store exports `useFiltersStore` with Zustand
+- [x] State includes `filters: ISavedFilter[]`
+- [x] State includes `isFetchingList: boolean`
+- [x] State includes `pendingAction: 'create' | null`
+- [x] State includes `pendingById: Record<string, 'rename' | 'delete'>`
+- [x] State includes `error: string | null`
+- [x] Actions: `fetchFilters`, `createFilter`, `updateFilter`, `deleteFilter`, `clearError`
+- [x] List remains visible during mutations (no global loading that blanks list)
+- [x] Only active submit/row action is disabled via `pendingAction` / `pendingById`
+- [x] Errors surface inline without blanking the list
+- [x] No inline `fetch` in presentational components (centralized in store)
+
+## Wiring Check
+- Store imports `ISavedFilter` from `@/lib/models/SavedFilter`
+- Store calls `/api/filters`, `/api/filters/${id}` endpoints
+- Store can be imported into any component without circular deps
+
+## Deviation Notes
+- None

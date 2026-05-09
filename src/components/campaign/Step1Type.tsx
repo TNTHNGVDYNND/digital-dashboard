@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useCampaignStore, CampaignType } from '@/store/campaign';
+import { useTemplatesStore } from '@/store/templates';
 
 const campaignTypes: { type: CampaignType; label: string; description: string; icon: string }[] = [
   {
@@ -30,12 +32,47 @@ const campaignTypes: { type: CampaignType; label: string; description: string; i
 ];
 
 export default function Step1Type() {
-  const { campaignData, updateCampaignData, nextStep } = useCampaignStore();
+  const { campaignData, updateCampaignData, nextStep, goToStep } = useCampaignStore();
+  const { templates, isLoading: templatesLoading, fetchTemplates, loadTemplate } = useTemplatesStore();
+  const [selectedTemplateId, setSelectedTemplateId] = useState('');
+
+  useEffect(() => {
+    fetchTemplates();
+  }, [fetchTemplates]);
+
+  const handleTemplateSelect = async (id: string) => {
+    setSelectedTemplateId(id);
+    if (!id) return;
+    const data = await loadTemplate(id);
+    if (data) {
+      updateCampaignData(data);
+      goToStep(3); // Jump to review since template has all data
+    }
+  };
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">Choose Campaign Type</h2>
       <p className="text-gray-600">Select the type of promotion that best fits your goals.</p>
+
+      {templates.length > 0 && (
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700">Load from Template</label>
+          <select
+            value={selectedTemplateId}
+            onChange={(e) => handleTemplateSelect(e.target.value)}
+            disabled={templatesLoading}
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 disabled:opacity-50"
+          >
+            <option value="">Select a saved template...</option>
+            {templates.map((t) => (
+              <option key={t._id} value={t._id}>
+                {t.name} — {t.type} (${t.budget.toLocaleString()})
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="grid gap-4 md:grid-cols-2">
         {campaignTypes.map((item) => (
