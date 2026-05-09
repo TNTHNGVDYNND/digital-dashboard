@@ -1,0 +1,28 @@
+# Slice 2.1 Evidence: Filter Control Components
+
+**Date:** 2026-05-09
+**Slice:** 2.1
+
+## Build Verification
+- Command: `npm run build`
+- Result: PASS (compiled successfully, TypeScript clean, static pages generated)
+
+## Files Created
+- `src/components/dashboard/StatusFilter.tsx`
+- `src/components/dashboard/DateRangeFilter.tsx`
+- `src/components/dashboard/BudgetTierFilter.tsx`
+
+## PRD Compliance Checklist
+- [x] StatusFilter: single-select control for draft | active | paused | completed
+- [x] DateRangeFilter: two native date inputs (from, to) with error display
+- [x] BudgetTierFilter: single-select control for budget tier
+- [x] Styled with Tailwind, consistent with dashboard language
+- [x] Dark mode support via `dark:` prefixes
+- [x] No shadcn/Radix usage
+
+## Wiring Check
+- Components are standalone, no imports needed beyond types
+- Ready to be composed by FilterToolbar
+
+## Deviation Notes
+- None

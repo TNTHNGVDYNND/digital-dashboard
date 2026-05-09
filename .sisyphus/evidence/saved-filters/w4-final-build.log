@@ -1,0 +1,79 @@
+# Slice 4.5 Evidence: Final Build + Regression Check
+
+## Build Verification
+- Command: `npm run build`
+- Result: PASS (zero TypeScript errors, compiled successfully in 5.9s)
+- Static pages generated: 14/14
+
+## Regression Checks
+
+### Existing Campaign Edit/Delete Flows
+- `CampaignEditModal` and `CampaignDeleteModal` still imported and rendered in `page.tsx` ✓
+- `setEditingCampaign` and `setDeletingCampaign` state hooks unchanged ✓
+- Campaign list item buttons still trigger edit/delete modals ✓
+- **Status: UNAFFECTED**
+
+### AnalyticsChart with Empty/Small Filtered List
+- `AnalyticsChart` returns `null` when `campaigns.length === 0` (safe, no crash) ✓
+- When filtered list has 1–2 campaigns, chart renders with reduced data points ✓
+- Chart receives `filteredCampaigns` from `page.tsx` (single filtered array) ✓
+- **Status: WORKING CORRECTLY**
+
+### Template Section
+- Template section rendered after campaigns area, independent of filter state ✓
+- `useTemplatesStore` and `TemplateCard` usage unchanged ✓
+- **Status: UNAFFECTED**
+
+### Debug Code / TODO Markers
+- Grep across `src/` for `TODO|FIXME|XXX|HACK|console.log|debugger`: **NONE FOUND** ✓
+
+## Architecture Checkpoint (from PRD)
+
+| Requirement | Status |
+|-------------|--------|
+| URL search params are sole source of truth for applied filters | PASS — `filterQuery = parseFilterQuery(searchParams)` |
+| `page.tsx` computes one filtered array and passes it to both list and `AnalyticsChart` | PASS — `filteredCampaigns = applyFilters(campaigns, filterQuery)` |
+| `page.tsx` uses `src/store/filters.ts` for preset data and mutations; no inline preset `fetch` calls | PASS — `useFiltersStore` with `fetchFilters`, `createFilter`, `updateFilter`, `deleteFilter` |
+| Existing auth scoping preserved | PASS — API routes use `auth()` from `src/lib/auth.ts` |
+| MVP semantics remain single-select for `status` and `tier` | PASS — `StatusFilter` and `BudgetTierFilter` are single-select controls |
+
+## Manual QA Checklist (PRD Checkpoints 1–9)
+
+| # | Checkpoint | Status |
+|---|-----------|--------|
+| 1 | Campaign `status` schema extended with enum | Completed in Wave 1 |
+| 2 | `SavedFilter` schema created with auth-scoped API | Completed in Wave 1 |
+| 3 | Query parsing/serialization helpers deterministic | Completed in Wave 1 |
+| 4 | Filter toolbar with URL-synced controls | Completed in Wave 2 |
+| 5 | Filtered empty state with "Clear all filters" | Completed in Wave 2 |
+| 6 | Zustand store for preset CRUD | Completed in Wave 2 |
+| 7 | Save-filter dialog with validation | Completed in Wave 3 |
+| 8 | Saved-filters popover with apply | Completed in Wave 3 |
+| 9 | Rename/delete dialogs, a11y, dark mode, build | Completed in Wave 4 |
+
+## New/Modified Files Summary
+
+### New Files
+- `src/components/dashboard/RenameFilterDialog.tsx`
+- `src/components/dashboard/DeleteFilterConfirmation.tsx`
+
+### Modified Files
+- `src/components/dashboard/SavedFiltersPopover.tsx` (a11y enhancements)
+- `src/app/dashboard/page.tsx` (wire rename/delete dialogs + handlers)
+
+### Unchanged (Verified Intact)
+- `src/components/dashboard/SaveFilterDialog.tsx`
+- `src/components/dashboard/FilterToolbar.tsx`
+- `src/components/dashboard/StatusFilter.tsx`
+- `src/components/dashboard/DateRangeFilter.tsx`
+- `src/components/dashboard/BudgetTierFilter.tsx`
+- `src/components/dashboard/AnalyticsChart.tsx`
+- `src/components/dashboard/CampaignEditModal.tsx`
+- `src/components/dashboard/CampaignDeleteModal.tsx`
+- `src/store/filters.ts`
+- `src/lib/filters/query.ts`
+- `src/lib/models/SavedFilter.ts`
+- `src/app/api/filters/route.ts`
+- `src/app/api/filters/[id]/route.ts`
+
+## Overall Status: PASSED

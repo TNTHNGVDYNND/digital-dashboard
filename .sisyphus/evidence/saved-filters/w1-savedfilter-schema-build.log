@@ -1,0 +1,34 @@
+# Slice 1.2 Evidence: SavedFilter Schema + FilterClause Type
+
+## Changes
+- Created `src/types/filters.ts` with shared `FilterClause` and `FilterQuery` types
+- Created `src/lib/models/SavedFilter.ts` with `ISavedFilter` interface + Mongoose schema
+
+## Build Verification
+```
+✓ Compiled successfully in 6.0s
+  Running TypeScript ...
+  Finished TypeScript in 4.5s ...
+✓ Generating static pages using 11 workers (13/13) in 284ms
+```
+
+## PRD Compliance
+- [x] `ISavedFilter` interface includes `userId`, `name`, `query`, `filters`, timestamps
+- [x] Mongoose schema matches interface with proper types and indexing
+- [x] `FilterClause` type is shared in `src/types/filters.ts`
+- [x] Build passes with zero TypeScript errors
+- [x] Type can be imported from both route handlers and store files (verified by build)
+
+## Goal-Backward Verification
+
+**Slice Goal:** MongoDB collection ready for preset CRUD; type shared across stack
+
+| # | Truth (Observable Behavior) | Artifacts | Wiring | Status |
+|---|------------------------------|-----------|--------|--------|
+| 1 | SavedFilter model exists with correct fields | `src/lib/models/SavedFilter.ts` | Interface + schema created | ✓ VERIFIED |
+| 2 | FilterClause type is shared across stack | `src/types/filters.ts` | Exported and imported by model | ✓ VERIFIED |
+| 3 | TypeScript can import from route handler and store | Build passes | No circular deps, path alias works | ✓ VERIFIED |
+
+**Anti-patterns:** None
+
+**Overall Status:** passed

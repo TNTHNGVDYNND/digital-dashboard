@@ -1,0 +1,31 @@
+{
+  "active_plan": ".sisyphus/plans/campaign-templates.md",
+  "started_at": "2026-05-09T00:00:00+02:00",
+  "plan_name": "campaign-templates",
+  "project_root": "/home/vladi/developer/digital-dashboard",
+  "state_version": "2.0.0",
+  "workflow_stage": "execution_complete",
+  "pending_gate": "closure_approval",
+  "approval_status": "waiting",
+  "gate_history": [
+    {"gate": "plan_created", "status": "completed", "timestamp": "2026-05-09T00:00:00+02:00"},
+    {"gate": "execution_approval", "status": "approved", "timestamp": "2026-05-09T00:00:00+02:00"},
+    {"gate": "wave_1_complete", "status": "completed", "timestamp": "2026-05-09T17:35:00+02:00"},
+    {"gate": "wave_2_complete", "status": "completed", "timestamp": "2026-05-09T17:45:00+02:00"},
+    {"gate": "wave_3_complete", "status": "completed", "timestamp": "2026-05-09T17:55:00+02:00"},
+    {"gate": "closure_approval", "status": "waiting", "timestamp": "2026-05-09T17:55:00+02:00"}
+  ],
+  "retry_counts": {},
+  "current_wave": 3,
+  "completed_slices": [
+    "1.1-template-model",
+    "1.2-api-routes",
+    "1.3-store-slice",
+    "2.1-step1type-dropdown",
+    "2.2-step4review-save",
+    "2.3-template-card",
+    "3.1-empty-state-delete",
+    "3.2-build-wiring",
+    "3.3-post-change-review"
+  ]
+}
