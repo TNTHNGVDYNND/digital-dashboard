@@ -1,15 +1,45 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useCampaigns, updateCampaign, deleteCampaign } from '@/hooks/useCampaigns';
-import type { ICampaign } from '@/lib/models/Campaign';
+import type { ICampaign, CampaignStatus, CampaignTier } from '@/lib/models/Campaign';
+import type { ISavedFilter } from '@/lib/models/SavedFilter';
+import type { FilterQuery } from '@/types/filters';
+import { parseFilterQuery, serializeFilterQuery } from '@/lib/filters/query';
 import AnalyticsChart from '@/components/dashboard/AnalyticsChart';
 import CampaignEditModal from '@/components/dashboard/CampaignEditModal';
 import CampaignDeleteModal from '@/components/dashboard/CampaignDeleteModal';
+import FilterToolbar from '@/components/dashboard/FilterToolbar';
+import SaveFilterDialog from '@/components/dashboard/SaveFilterDialog';
+import RenameFilterDialog from '@/components/dashboard/RenameFilterDialog';
+import DeleteFilterConfirmation from '@/components/dashboard/DeleteFilterConfirmation';
+import TemplateCard from '@/components/campaign/TemplateCard';
+import { useTemplatesStore } from '@/store/templates';
+import { useFiltersStore } from '@/store/filters';
 import Link from 'next/link';
 
+function applyFilters(campaigns: ICampaign[], query: FilterQuery): ICampaign[] {
+  return campaigns.filter((campaign) => {
+    if (query.status && campaign.status !== query.status) return false;
+    if (query.tier && campaign.tier !== query.tier) return false;
+
+    if (query.from || query.to) {
+      if (!campaign.startDate) return false;
+      const start = new Date(campaign.startDate).toISOString().split('T')[0];
+      if (query.from && start < query.from) return false;
+      if (query.to && start > query.to) return false;
+    }
+
+    return true;
+  });
+}
+
 export default function DashboardPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const { campaigns, isLoading, isError, mutate } = useCampaigns();
+  const { templates, isLoading: templatesLoading, fetchTemplates, deleteTemplate } = useTemplatesStore();
 
   // Modal State
   const [editingCampaign, setEditingCampaign] = useState<ICampaign | null>(null);
@@ -17,7 +47,59 @@ export default function DashboardPage() {
   const [isMigrating, setIsMigrating] = useState(false);
   const [migrationStatus, setMigrationStatus] = useState<string | null>(null);
 
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false);
+  const [renamingFilter, setRenamingFilter] = useState<ISavedFilter | null>(null);
+  const [deletingFilter, setDeletingFilter] = useState<ISavedFilter | null>(null);
+
+  const {
+    filters: savedFilters,
+    createFilter,
+    updateFilter,
+    deleteFilter,
+    fetchFilters,
+    pendingAction,
+    pendingById,
+    error: filterError,
+    clearError,
+  } = useFiltersStore();
+
+  useEffect(() => {
+    fetchTemplates();
+  }, [fetchTemplates]);
+
+  useEffect(() => {
+    fetchFilters();
+  }, [fetchFilters]);
+
+  const filterQuery = useMemo(() => parseFilterQuery(searchParams), [searchParams]);
+
+  const filteredCampaigns = useMemo(() => {
+    if (!campaigns) return [];
+    return applyFilters(campaigns, filterQuery);
+  }, [campaigns, filterQuery]);
+
   const hasCampaigns = campaigns && campaigns.length > 0;
+  const hasActiveFilters =
+    !!filterQuery.status || !!filterQuery.from || !!filterQuery.to || !!filterQuery.tier;
+
+  const updateUrlFilter = useCallback(
+    (key: keyof FilterQuery, value: string) => {
+      const next: FilterQuery = { ...filterQuery };
+      if (value) {
+        next[key] = value;
+      } else {
+        delete next[key];
+      }
+      const canonical = serializeFilterQuery(next);
+      router.replace(`/dashboard${canonical ? `?${canonical}` : ''}`, { scroll: false });
+    },
+    [filterQuery, router],
+  );
+
+  const handleClearAll = useCallback(() => {
+    router.replace('/dashboard', { scroll: false });
+  }, [router]);
 
   const handleMigrate = async () => {
     setIsMigrating(true);
@@ -28,7 +110,7 @@ export default function DashboardPage() {
       if (data.success) {
         if (data.count > 0) {
           setMigrationStatus(`Success! Found and migrated ${data.count} campaigns.`);
-          mutate(); // Re-fetch data
+          mutate();
         } else {
           setMigrationStatus('No legacy campaigns found to migrate.');
         }
@@ -45,7 +127,7 @@ export default function DashboardPage() {
   const handleEditSave = async (id: string, name: string) => {
     try {
       await updateCampaign(id, { name });
-      mutate(); // Re-fetch the SWR cache
+      mutate();
     } catch (err) {
       console.error(err);
     }
@@ -54,10 +136,55 @@ export default function DashboardPage() {
   const handleDeleteConfirm = async (id: string) => {
     try {
       await deleteCampaign(id);
-      mutate(); // Re-fetch the SWR cache
+      mutate();
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleDeleteTemplate = async (id: string) => {
+    await deleteTemplate(id);
+  };
+
+  const handleSaveFilter = async (name: string) => {
+    clearError();
+    const canonical = serializeFilterQuery(filterQuery);
+    const result = await createFilter(name, canonical);
+    if (result) {
+      await fetchFilters();
+    }
+  };
+
+  const handleApplyFilter = (query: string) => {
+    const parsed = parseFilterQuery(query);
+    const canonical = serializeFilterQuery(parsed);
+    router.replace(`/dashboard${canonical ? `?${canonical}` : ''}`, { scroll: false });
+  };
+
+  const handleRenameFilter = (id: string) => {
+    const filter = savedFilters.find((f) => String(f._id) === id);
+    if (filter) {
+      setRenamingFilter(filter);
+    }
+  };
+
+  const handleConfirmRename = async (name: string) => {
+    if (!renamingFilter) return;
+    clearError();
+    await updateFilter(String(renamingFilter._id), name);
+  };
+
+  const handleDeleteFilter = (id: string) => {
+    const filter = savedFilters.find((f) => String(f._id) === id);
+    if (filter) {
+      setDeletingFilter(filter);
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deletingFilter) return;
+    clearError();
+    await deleteFilter(String(deletingFilter._id));
   };
 
   return (
@@ -80,52 +207,92 @@ export default function DashboardPage() {
           </div>
         ) : hasCampaigns ? (
           <>
-            <AnalyticsChart campaigns={campaigns} />
+            <FilterToolbar
+              status={(filterQuery.status as CampaignStatus) || ''}
+              from={filterQuery.from || ''}
+              to={filterQuery.to || ''}
+              tier={(filterQuery.tier as CampaignTier) || ''}
+              onStatusChange={(value) => updateUrlFilter('status', value)}
+              onFromChange={(value) => updateUrlFilter('from', value)}
+              onToChange={(value) => updateUrlFilter('to', value)}
+              onTierChange={(value) => updateUrlFilter('tier', value)}
+              onClearAll={handleClearAll}
+              hasActiveFilters={hasActiveFilters}
+              onSaveClick={() => setIsSaveDialogOpen(true)}
+              filters={savedFilters}
+              onApplyFilter={handleApplyFilter}
+              onRenameFilter={handleRenameFilter}
+              onDeleteFilter={handleDeleteFilter}
+              pendingById={pendingById}
+              isPopoverOpen={isPopoverOpen}
+              onPopoverOpenChange={setIsPopoverOpen}
+            />
+
+            <AnalyticsChart campaigns={filteredCampaigns} />
 
             <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800">
               <h2 className="mb-6 text-xl font-semibold text-gray-900 dark:text-white">
                 Your Campaigns
               </h2>
-              <div className="grid gap-4">
-                {campaigns.map((campaign: ICampaign) => (
-                  <div
-                    key={campaign._id as unknown as string}
-                    className="group flex items-center justify-between rounded-lg border border-gray-100 p-4 transition-colors hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
-                  >
-                    <div>
-                      <h3 className="font-medium text-gray-900 dark:text-white">{campaign.name}</h3>
-                      <p className="text-sm text-gray-500 capitalize">
-                        {campaign.type} • {campaign.tier} tier
-                      </p>
-                    </div>
+              {filteredCampaigns.length > 0 ? (
+                <div className="grid gap-4">
+                  {filteredCampaigns.map((campaign: ICampaign) => (
+                    <div
+                      key={campaign._id as unknown as string}
+                      className="group flex items-center justify-between rounded-lg border border-gray-100 p-4 transition-colors hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
+                    >
+                      <div>
+                        <h3 className="font-medium text-gray-900 dark:text-white">{campaign.name}</h3>
+                        <p className="text-sm text-gray-500 capitalize">
+                          {campaign.type} • {campaign.tier} tier
+                          {campaign.status && (
+                            <span className="ml-2 inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+                              {campaign.status}
+                            </span>
+                          )}
+                        </p>
+                      </div>
 
-                    <div className="flex items-center gap-6">
-                      <div className="text-right">
-                        <div className="font-semibold text-indigo-600">
-                          ${campaign.budget.toLocaleString()}
+                      <div className="flex items-center gap-6">
+                        <div className="text-right">
+                          <div className="font-semibold text-indigo-600">
+                            ${campaign.budget.toLocaleString()}
+                          </div>
+                          <div className="text-sm text-gray-500">{campaign.duration} days</div>
                         </div>
-                        <div className="text-sm text-gray-500">{campaign.duration} days</div>
-                      </div>
 
-                      {/* CRUD Actions */}
-                      <div className="flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                        <button
-                          onClick={() => setEditingCampaign(campaign)}
-                          className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-indigo-600 dark:hover:bg-gray-700"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => setDeletingCampaign(campaign)}
-                          className="rounded p-2 text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/30"
-                        >
-                          Delete
-                        </button>
+                        {/* CRUD Actions */}
+                        <div className="flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                          <button
+                            onClick={() => setEditingCampaign(campaign)}
+                            className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-indigo-600 dark:hover:bg-gray-700"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => setDeletingCampaign(campaign)}
+                            className="rounded p-2 text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/30"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-16 text-center">
+                  <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">
+                    No campaigns match the current filters.
+                  </p>
+                  <button
+                    onClick={handleClearAll}
+                    className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+                  >
+                    Clear all filters
+                  </button>
+                </div>
+              )}
             </div>
           </>
         ) : (
@@ -164,6 +331,42 @@ export default function DashboardPage() {
             )}
           </div>
         )}
+
+        {/* Saved Templates Section */}
+        <div className="mt-12">
+          <h2 className="mb-6 text-xl font-semibold text-gray-900 dark:text-white">
+            Saved Templates
+          </h2>
+
+          {templatesLoading ? (
+            <div className="flex justify-center py-12">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent" />
+            </div>
+          ) : templates.length > 0 ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {templates.map((template) => (
+                <TemplateCard
+                  key={template._id}
+                  template={template}
+                  onLoad={() => {}}
+                  onDelete={handleDeleteTemplate}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-xl text-indigo-600 dark:bg-indigo-900/20">
+                📝
+              </div>
+              <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+                No templates yet
+              </h3>
+              <p className="max-w-sm text-sm text-gray-600 dark:text-gray-400">
+                Save your campaign configurations as templates to quickly reuse them later.
+              </p>
+            </div>
+          )}
+        </div>
       </div>
 
       {editingCampaign && (
@@ -181,6 +384,36 @@ export default function DashboardPage() {
           isOpen={!!deletingCampaign}
           onClose={() => setDeletingCampaign(null)}
           onConfirm={handleDeleteConfirm}
+        />
+      )}
+
+      <SaveFilterDialog
+        isOpen={isSaveDialogOpen}
+        onClose={() => setIsSaveDialogOpen(false)}
+        onSave={handleSaveFilter}
+        currentQuery={serializeFilterQuery(filterQuery)}
+        isPending={pendingAction === 'create'}
+        error={filterError}
+      />
+
+      {renamingFilter && (
+        <RenameFilterDialog
+          isOpen={!!renamingFilter}
+          onClose={() => setRenamingFilter(null)}
+          onRename={handleConfirmRename}
+          currentName={renamingFilter.name}
+          isPending={pendingById[String(renamingFilter._id)] === 'rename'}
+          error={filterError}
+        />
+      )}
+
+      {deletingFilter && (
+        <DeleteFilterConfirmation
+          isOpen={!!deletingFilter}
+          onClose={() => setDeletingFilter(null)}
+          onConfirm={handleConfirmDelete}
+          filterName={deletingFilter.name}
+          isPending={pendingById[String(deletingFilter._id)] === 'delete'}
         />
       )}
     </main>
