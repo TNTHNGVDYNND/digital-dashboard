@@ -4,13 +4,12 @@ import './globals.css';
 import PreloaderWrapper from '@/components/PreloaderWrapper';
 import Navbar from '@/components/layout/Navbar';
 
-if (typeof window !== 'undefined') {
-  const originalWarn = console.warn;
-  console.warn = (...args: unknown[]) => {
-    if (args[0]?.toString?.().includes?.('THREE.Clock')) return;
-    originalWarn.apply(console, args);
-  };
-}
+const originalWarn = console.warn;
+console.warn = (...args: unknown[]) => {
+  const msg = args[0]?.toString?.() || '';
+  if (msg.includes('THREE.Clock') || msg.includes('middleware') || msg.includes('deprecated')) return;
+  originalWarn.apply(console, args);
+};
 
 const inter = Inter({ subsets: ['latin'] });
 
