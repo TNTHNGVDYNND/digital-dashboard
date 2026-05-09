@@ -4,13 +4,6 @@ import './globals.css';
 import PreloaderWrapper from '@/components/PreloaderWrapper';
 import Navbar from '@/components/layout/Navbar';
 
-const originalWarn = console.warn;
-console.warn = (...args: unknown[]) => {
-  const msg = args[0]?.toString?.() || '';
-  if (msg.includes('THREE.Clock') || msg.includes('middleware') || msg.includes('deprecated')) return;
-  originalWarn.apply(console, args);
-};
-
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
