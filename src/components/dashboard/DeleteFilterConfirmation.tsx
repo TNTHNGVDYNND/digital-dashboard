@@ -94,7 +94,7 @@ export default function DeleteFilterConfirmation({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -104,15 +104,15 @@ export default function DeleteFilterConfirmation({
         role="dialog"
         aria-modal="true"
         aria-labelledby="delete-filter-title"
-        className="w-full max-w-sm rounded-2xl border border-red-200 bg-white p-6 shadow-xl dark:border-red-900/30 dark:bg-gray-800"
+        className="w-full max-w-sm rounded-2xl border border-danger-500/30 bg-surface-0 p-6 shadow-xl"
       >
         <h2
           id="delete-filter-title"
-          className="mb-2 text-xl font-bold text-gray-900 dark:text-white"
+          className="mb-2 text-xl font-bold text-text-primary"
         >
           Delete Filter Preset?
         </h2>
-        <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
+        <p className="mb-6 text-sm text-text-secondary">
           Are you sure you want to delete <strong>{filterName}</strong>? This action cannot be
           undone.
         </p>
@@ -121,7 +121,7 @@ export default function DeleteFilterConfirmation({
             type="button"
             onClick={onClose}
             disabled={isPending}
-            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 disabled:opacity-50 dark:text-gray-300 dark:hover:bg-gray-700"
+            className="rounded-lg px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-100 disabled:opacity-50"
           >
             Cancel
           </button>
@@ -130,7 +130,7 @@ export default function DeleteFilterConfirmation({
             type="button"
             onClick={handleConfirm}
             disabled={isPending}
-            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+            className="rounded-lg bg-danger-600 px-4 py-2 text-sm font-medium text-text-inverse transition-colors hover:bg-danger-600 disabled:opacity-50"
           >
             {isPending ? 'Deleting...' : 'Confirm Delete'}
           </button>

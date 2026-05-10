@@ -33,7 +33,12 @@ const campaignTypes: { type: CampaignType; label: string; description: string; i
 
 export default function Step1Type() {
   const { campaignData, updateCampaignData, nextStep, goToStep } = useCampaignStore();
-  const { templates, isLoading: templatesLoading, fetchTemplates, loadTemplate } = useTemplatesStore();
+  const {
+    templates,
+    isLoading: templatesLoading,
+    fetchTemplates,
+    loadTemplate,
+  } = useTemplatesStore();
   const [selectedTemplateId, setSelectedTemplateId] = useState('');
 
   useEffect(() => {
@@ -52,17 +57,17 @@ export default function Step1Type() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Choose Campaign Type</h2>
-      <p className="text-gray-600">Select the type of promotion that best fits your goals.</p>
+      <h2 className="text-2xl font-bold text-text-primary">Choose Campaign Type</h2>
+      <p className="text-text-secondary">Select the type of promotion that best fits your goals.</p>
 
       {templates.length > 0 && (
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">Load from Template</label>
+          <label className="mb-2 block text-sm font-medium text-text-secondary">Load from Template</label>
           <select
             value={selectedTemplateId}
             onChange={(e) => handleTemplateSelect(e.target.value)}
             disabled={templatesLoading}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 disabled:opacity-50"
+            className="w-full rounded-lg border border-surface-300 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 disabled:opacity-50"
           >
             <option value="">Select a saved template...</option>
             {templates.map((t) => (
@@ -83,13 +88,13 @@ export default function Step1Type() {
             onClick={() => updateCampaignData({ type: item.type })}
             className={`rounded-xl border-2 p-6 text-left transition-all ${
               campaignData.type === item.type
-                ? 'border-indigo-600 bg-indigo-50'
-                : 'border-gray-200 hover:border-indigo-300'
+                ? 'border-primary-600 bg-primary-50'
+                : 'border-surface-200 hover:border-primary-300'
             }`}
           >
             <div className="mb-3 text-3xl">{item.icon}</div>
-            <h3 className="mb-1 font-semibold text-gray-900">{item.label}</h3>
-            <p className="text-sm text-gray-600">{item.description}</p>
+            <h3 className="mb-1 font-semibold text-text-primary">{item.label}</h3>
+            <p className="text-sm text-text-secondary">{item.description}</p>
           </button>
         ))}
       </div>
@@ -99,7 +104,7 @@ export default function Step1Type() {
           type="button"
           onClick={nextStep}
           disabled={!campaignData.type}
-          className="w-full sm:w-auto rounded-full bg-indigo-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+          className="w-full sm:w-auto rounded-full bg-primary-600 px-6 py-3 font-semibold text-text-inverse transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-surface-300"
         >
           Continue
         </button>

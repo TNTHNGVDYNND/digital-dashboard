@@ -15,7 +15,18 @@ interface SavedFiltersPopoverProps {
 
 function EditIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
     </svg>
@@ -24,7 +35,18 @@ function EditIcon() {
 
 function TrashIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <polyline points="3 6 5 6 21 6" />
       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
     </svg>
@@ -139,11 +161,11 @@ export default function SavedFiltersPopover({
         onKeyDown={handleTriggerKeyDown}
         aria-haspopup="true"
         aria-expanded={isOpen}
-        className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+        className="rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-50"
       >
         Saved Filters
         {filters.length > 0 && (
-          <span className="ml-1.5 inline-flex items-center justify-center rounded-full bg-indigo-100 px-1.5 py-0.5 text-xs font-semibold text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">
+          <span className="ml-1.5 inline-flex items-center justify-center rounded-full bg-primary-100 px-1.5 py-0.5 text-xs font-semibold text-primary-700">
             {filters.length}
           </span>
         )}
@@ -152,10 +174,10 @@ export default function SavedFiltersPopover({
       {isOpen && (
         <div
           ref={panelRef}
-          className="absolute right-0 z-50 mt-2 w-72 rounded-xl border border-gray-200 bg-white p-2 shadow-lg dark:border-gray-700 dark:bg-gray-800 sm:w-80"
+          className="absolute right-0 z-50 mt-2 w-72 rounded-xl border border-surface-200 bg-surface-0 p-2 shadow-lg sm:w-80"
         >
           {filters.length === 0 ? (
-            <div className="px-3 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+            <div className="px-3 py-4 text-center text-sm text-text-muted">
               No saved filters yet.
             </div>
           ) : (
@@ -171,14 +193,14 @@ export default function SavedFiltersPopover({
                 const isPending = pendingById[id];
                 return (
                   <li key={id} data-row role="option">
-                    <div className="flex items-center justify-between rounded-lg px-2 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <div className="flex items-center justify-between rounded-lg px-2 py-2 hover:bg-surface-50">
                       <button
                         type="button"
                         data-apply
                         data-query={filter.query}
                         onClick={() => handleApply(filter.query)}
                         disabled={!!isPending}
-                        className="flex-1 text-left text-sm font-medium text-gray-900 transition-colors hover:text-indigo-600 disabled:opacity-50 dark:text-gray-100 dark:hover:text-indigo-400"
+                        className="flex-1 text-left text-sm font-medium text-text-primary transition-colors hover:text-primary-600 disabled:opacity-50"
                       >
                         {filter.name}
                       </button>
@@ -189,7 +211,7 @@ export default function SavedFiltersPopover({
                           onClick={() => onRename(id)}
                           disabled={!!isPending}
                           aria-label={`Rename filter ${filter.name}`}
-                          className="rounded p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-indigo-600 disabled:opacity-50 dark:hover:bg-gray-700 dark:hover:text-indigo-400"
+                          className="rounded p-1.5 text-text-muted transition-colors hover:bg-surface-100 hover:text-primary-600 disabled:opacity-50"
                         >
                           <EditIcon />
                         </button>
@@ -198,7 +220,7 @@ export default function SavedFiltersPopover({
                           onClick={() => onDelete(id)}
                           disabled={!!isPending}
                           aria-label={`Delete filter ${filter.name}`}
-                          className="rounded p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600 disabled:opacity-50 dark:hover:bg-red-900/30 dark:hover:text-red-400"
+                          className="rounded p-1.5 text-text-muted transition-colors hover:bg-danger-500/10 hover:text-danger-600 disabled:opacity-50"
                         >
                           <TrashIcon />
                         </button>

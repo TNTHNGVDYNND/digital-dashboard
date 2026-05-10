@@ -17,7 +17,7 @@ export default function CampaignBuilder() {
   const CurrentStep = steps[stepIndex];
 
   return (
-    <div className="mx-auto max-w-4xl rounded-2xl border border-gray-200 bg-white p-8 shadow-lg">
+    <div className="mx-auto max-w-4xl rounded-2xl border border-surface-200 bg-surface-0 p-8 shadow-lg">
       <StepIndicator currentStep={stepIndex} totalSteps={4} labels={stepLabels} />
 
       <div className="mt-8">

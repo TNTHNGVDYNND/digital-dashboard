@@ -32,4 +32,5 @@ const SavedFilterSchema: Schema = new Schema(
   },
 );
 
-export default mongoose.models.SavedFilter || mongoose.model<ISavedFilter>('SavedFilter', SavedFilterSchema);
+export default mongoose.models.SavedFilter ||
+  mongoose.model<ISavedFilter>('SavedFilter', SavedFilterSchema);
