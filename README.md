@@ -20,6 +20,10 @@ npm run dev
 ### Frontend
 
 - **Modern UI** — Built with TailwindCSS v4 and responsive design
+- **Design System** — Semantic token-driven styling via `@theme` directive
+  - 66 semantic tokens: colors (primary, surface, text, accent, success, warning, danger), spacing, typography, breakpoints, radii, shadows
+  - Dark mode: `prefers-color-scheme` + manual `data-theme` toggle
+  - ThemeToggle component with SSR-safe hydration
 - **Animations** — GSAP ScrollTrigger for scroll-synced animations
 - **3D Elements** — Three.js + React Three Fiber rotating hero scene
 - **Performance** — Next.js App Router with static optimization
@@ -48,7 +52,7 @@ npm run dev
 | --------------- | ---------------------------------- |
 | **Framework**   | Next.js 16 (App Router) + React 19 |
 | **Language**    | TypeScript 6 (strict mode)         |
-| **Styling**     | TailwindCSS v4                     |
+| **Styling**     | TailwindCSS v4 + `@theme` design system |
 | **Animations**  | GSAP 3 + ScrollTrigger             |
 | **3D Graphics** | Three.js + React Three Fiber       |
 | **State**       | Zustand (client) + SWR (server)    |
@@ -73,7 +77,7 @@ digital-dashboard/
 │   │   ├── campaign/          # Builder components
 │   │   ├── sections/          # Homepage sections
 │   │   ├── canvas/            # Three.js components
-│   │   └── ui/                # Reusable UI
+│   │   └── ui/                # Reusable UI + ThemeToggle
 │   ├── hooks/                 # Custom React hooks
 │   ├── lib/                   # Database + models
 │   └── store/                 # Zustand stores
@@ -130,6 +134,46 @@ npm run dev
 npm run build
 npm start
 ```
+
+## 🎨 Design System
+
+Implemented in `src/app/globals.css` using Tailwind v4 `@theme` directives.
+
+### Semantic Tokens
+
+| Category | Tokens | Example |
+|----------|--------|---------|
+| **Colors** | `primary-{50-900}`, `surface-{0-500}`, `text-{primary,secondary,muted,inverse}`, `accent-{500,600}`, `success-{500,600}`, `warning-{500,600}`, `danger-{500,600}` | `--color-primary-600: #4f46e5` |
+| **Spacing** | `space-{4,8,12,16,20,24,32,40,48,64,80,96}` | `--spacing-16: 1rem` |
+| **Typography** | `font-sans`, `font-display`, `text-{xs-4xl}`, `font-{normal-bold}`, `leading-{tight,relaxed}` | `--text-lg: 1.125rem` |
+| **Breakpoints** | `sm`, `md`, `lg`, `xl`, `2xl` | `--breakpoint-lg: 64rem` |
+| **Radii** | `sm`, `md`, `lg`, `xl`, `2xl`, `full` | `--radius-2xl: 1rem` |
+| **Shadows** | `sm`, `md`, `lg`, `xl` | `--shadow-lg: 0 10px 15px...` |
+
+### Dark Mode
+
+- **Automatic**: Respects `prefers-color-scheme: dark`
+- **Manual Override**: `data-theme="dark"` / `data-theme="light"` attribute on `<html>`
+- **No-Flash Bootstrap**: Inline script in `layout.tsx` runs before first paint
+- **Persistence**: `localStorage.theme` stores user preference
+- **ThemeToggle**: SSR-safe React component in navbar
+
+### Component Migration
+
+**24 components migrated** from hardcoded literal classes to semantic tokens:
+- **UI Primitives** (2): PricingCard, StepIndicator
+- **Dashboard** (11): FilterToolbar, AnalyticsChart, StatusFilter, etc.
+- **Campaign Builder** (7): CampaignBuilder, Step1Type–Step4Review, SuccessModal, TemplateCard
+- **Page Shells** (4): campaigns, contact, dashboard, faq
+
+**Preserved (out of scope):**
+- GSAP-animated sections (HeroSection, FeaturesSection, CTASection, etc.)
+- Three.js canvas host and overlay positioning
+
+**Deferred:**
+- Navbar, loading.tsx, error.tsx, login/register pages still contain some literal colors (tracked for follow-up)
+
+---
 
 ## 📊 API Endpoints
 
@@ -198,7 +242,7 @@ npm start
 ### Key Architectural Decisions
 
 1. **Next.js App Router** — For SSR/SEO benefits on marketing pages
-2. **TailwindCSS v4** — Utility-first styling with zero runtime
+2. **TailwindCSS v4 + `@theme`** — CSS-native design system with semantic tokens, zero runtime
 3. **GSAP + Three.js** — Superior animation control and 3D capabilities
 4. **Zustand** — Minimal state management for campaign builder
 5. **MongoDB** — Flexible document structure for campaign data
@@ -210,6 +254,7 @@ npm start
 
 - [x] Next.js foundation with TypeScript
 - [x] TailwindCSS styling
+- [x] **Semantic design system** (`@theme` tokens, dark mode, responsive)
 - [x] GSAP animations + Three.js 3D
 - [x] 4-step campaign builder
 - [x] MongoDB integration
@@ -240,6 +285,8 @@ npm start
 - [ ] Database shows campaign document
 - [ ] Responsive on mobile/tablet/desktop
 - [ ] Keyboard navigation works
+- [ ] **Dark mode toggles correctly** (manual + OS preference)
+- [ ] **No flash of wrong theme on load**
 - [ ] Build passes with 0 errors
 
 ### API Testing
@@ -282,6 +329,8 @@ None currently — all resolved:
 - [Roadmap](plans/roadmap.md)
 - [Components](plans/components.md)
 - [Decisions](plans/decisions.md)
+- [Styling Refactor PRD](.sisyphus/prds/styling-refactor-prd.md)
+- [Styling Refactor Plan](.sisyphus/plans/styling-refactor.md)
 
 ## Contributing
 
@@ -305,7 +354,22 @@ MIT License — feel free to use this as a starter template for your own project
 
 **Built with ❤️ using modern web technologies**
 
-_Last updated: 2026-04-20_
+_Last updated: 2026-05-10_
+
+---
+
+## Recent Changes
+
+### Styling Refactor (2026-05-10)
+
+Implemented a complete design system using Tailwind v4 `@theme` directives:
+- 66 semantic tokens (colors, spacing, typography, breakpoints, radii, shadows)
+- Dark mode with `prefers-color-scheme` + manual `data-theme` toggle
+- No-flash bootstrap script in `layout.tsx`
+- ThemeToggle component with SSR-safe hydration
+- 24 components migrated to semantic tokens
+- GSAP animations and Three.js canvas preserved
+- Full governance: PRD → Plan → 5 Waves → Evidence Archive
 
 ## Deployment
 
