@@ -26,7 +26,10 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     if (typeof body.query === 'string') {
       const processed = processFilterQuery(body.query);
       if (!processed) {
-        return NextResponse.json({ success: false, error: 'Malformed or oversized query' }, { status: 400 });
+        return NextResponse.json(
+          { success: false, error: 'Malformed or oversized query' },
+          { status: 400 },
+        );
       }
       updateData.query = processed.canonical;
       updateData.filters = processed.filters;
