@@ -39,7 +39,12 @@ export default function DashboardPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { campaigns, isLoading, isError, mutate } = useCampaigns();
-  const { templates, isLoading: templatesLoading, fetchTemplates, deleteTemplate } = useTemplatesStore();
+  const {
+    templates,
+    isLoading: templatesLoading,
+    fetchTemplates,
+    deleteTemplate,
+  } = useTemplatesStore();
 
   // Modal State
   const [editingCampaign, setEditingCampaign] = useState<ICampaign | null>(null);
@@ -188,21 +193,21 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-900">
+    <main className="min-h-screen bg-surface-50 px-4 py-12">
       <div className="container mx-auto max-w-5xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <h1 className="text-3xl font-bold text-text-primary">Dashboard</h1>
+          <p className="mt-2 text-text-secondary">
             Overview of your active campaigns and performance.
           </p>
         </div>
 
         {isLoading ? (
           <div className="flex justify-center py-12">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent" />
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary-600 border-t-transparent" />
           </div>
         ) : isError ? (
-          <div className="rounded-2xl border border-red-200 bg-red-50 p-8 text-center text-red-600">
+          <div className="rounded-2xl border border-danger-500/30 bg-danger-500/10 p-8 text-center text-danger-600">
             Failed to load campaigns. Please try again.
           </div>
         ) : hasCampaigns ? (
@@ -242,7 +247,9 @@ export default function DashboardPage() {
                       className="group flex items-center justify-between rounded-lg border border-gray-100 p-4 transition-colors hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
                     >
                       <div>
-                        <h3 className="font-medium text-gray-900 dark:text-white">{campaign.name}</h3>
+                        <h3 className="font-medium text-gray-900 dark:text-white">
+                          {campaign.name}
+                        </h3>
                         <p className="text-sm text-gray-500 capitalize">
                           {campaign.type} • {campaign.tier} tier
                           {campaign.status && (

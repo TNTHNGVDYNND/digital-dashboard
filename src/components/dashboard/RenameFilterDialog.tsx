@@ -130,7 +130,7 @@ export default function RenameFilterDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -140,11 +140,11 @@ export default function RenameFilterDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="rename-filter-title"
-        className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-700 dark:bg-gray-800"
+        className="w-full max-w-md rounded-2xl border border-surface-200 bg-surface-0 p-6 shadow-xl"
       >
         <h2
           id="rename-filter-title"
-          className="mb-4 text-xl font-bold text-gray-900 dark:text-white"
+          className="mb-4 text-xl font-bold text-text-primary"
         >
           Rename Filter Preset
         </h2>
@@ -153,7 +153,7 @@ export default function RenameFilterDialog({
           <div className="mb-4">
             <label
               htmlFor="rename-filter-name"
-              className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              className="mb-1 block text-sm font-medium text-text-secondary"
             >
               Preset Name
             </label>
@@ -164,14 +164,14 @@ export default function RenameFilterDialog({
               value={name}
               onChange={handleNameChange}
               disabled={isPending}
-              className="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-900 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-indigo-400 dark:focus:ring-indigo-400"
+              className="w-full rounded-xl border border-surface-300 px-4 py-2 text-text-primary transition-colors focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:opacity-50"
               aria-invalid={displayError ? 'true' : 'false'}
               aria-describedby={displayError ? 'rename-filter-name-error' : undefined}
             />
             {displayError && (
               <p
                 id="rename-filter-name-error"
-                className="mt-1 text-xs text-red-600 dark:text-red-400"
+                className="mt-1 text-xs text-danger-600"
                 role="alert"
               >
                 {displayError}
@@ -184,14 +184,14 @@ export default function RenameFilterDialog({
               type="button"
               onClick={onClose}
               disabled={isPending}
-              className="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 disabled:opacity-50 dark:text-gray-300 dark:hover:bg-gray-700"
+              className="rounded-lg px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-100 disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isPending}
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+              className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-text-inverse transition-colors hover:bg-primary-700 disabled:opacity-50"
             >
               {isPending ? 'Renaming...' : 'Rename'}
             </button>

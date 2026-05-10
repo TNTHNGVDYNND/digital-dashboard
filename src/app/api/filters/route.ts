@@ -34,7 +34,10 @@ export async function POST(req: Request) {
 
     const processed = processFilterQuery(rawQuery);
     if (!processed) {
-      return NextResponse.json({ success: false, error: 'Malformed or oversized query' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: 'Malformed or oversized query' },
+        { status: 400 },
+      );
     }
 
     const filter = await SavedFilter.create({

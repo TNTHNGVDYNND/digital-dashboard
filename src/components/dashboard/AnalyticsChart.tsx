@@ -29,8 +29,8 @@ export default function AnalyticsChart({ campaigns }: { campaigns: ICampaign[] }
   if (!campaigns || campaigns.length === 0) return null;
 
   return (
-    <div className="mb-8 h-80 w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-      <h3 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
+    <div className="mb-8 h-80 w-full rounded-2xl border border-surface-200 bg-surface-0 p-6 shadow-sm">
+      <h3 className="mb-6 text-lg font-semibold text-text-primary">
         Campaign Performance Overview
       </h3>
       <ResponsiveContainer width="100%" height="80%">

@@ -39,24 +39,24 @@ export default function Step2Audience() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Define Target Audience</h2>
-      <p className="text-gray-600">Who do you want to reach with this campaign?</p>
+      <h2 className="text-2xl font-bold text-text-primary">Define Target Audience</h2>
+      <p className="text-text-secondary">Who do you want to reach with this campaign?</p>
 
       <div className="space-y-4">
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">Campaign Name</label>
+          <label className="mb-2 block text-sm font-medium text-text-secondary">Campaign Name</label>
           <input
             type="text"
             value={campaignData.name}
             onChange={(e) => updateCampaignData({ name: e.target.value })}
             placeholder="e.g., Summer Sale 2024"
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+            className="w-full rounded-lg border border-surface-300 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
           />
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">Age Range</label>
+            <label className="mb-2 block text-sm font-medium text-text-secondary">Age Range</label>
             <div className="flex items-center gap-4">
               <input
                 type="number"
@@ -69,9 +69,9 @@ export default function Step2Audience() {
                     ageRange: [parseInt(e.target.value), campaignData.targetAudience.ageRange[1]],
                   })
                 }
-                className="w-20 rounded-lg border border-gray-300 px-3 py-2 text-center focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                className="w-20 rounded-lg border border-surface-300 px-3 py-2 text-center focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
               />
-              <span className="text-gray-500">to</span>
+              <span className="text-text-muted">to</span>
               <input
                 type="number"
                 aria-label="Maximum age"
@@ -83,13 +83,13 @@ export default function Step2Audience() {
                     ageRange: [campaignData.targetAudience.ageRange[0], parseInt(e.target.value)],
                   })
                 }
-                className="w-20 rounded-lg border border-gray-300 px-3 py-2 text-center focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                className="w-20 rounded-lg border border-surface-300 px-3 py-2 text-center focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">Gender</label>
+            <label className="mb-2 block text-sm font-medium text-text-secondary">Gender</label>
             <select
               value={campaignData.targetAudience.gender}
               onChange={(e) =>
@@ -97,7 +97,7 @@ export default function Step2Audience() {
                   gender: e.target.value as typeof campaignData.targetAudience.gender,
                 })
               }
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:outline-none"
+              className="w-full rounded-lg border border-surface-300 px-4 py-2 focus:border-primary-500 focus:outline-none"
             >
               <option value="all">All Genders</option>
               <option value="male">Male</option>
@@ -108,7 +108,7 @@ export default function Step2Audience() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">Interests</label>
+          <label className="mb-2 block text-sm font-medium text-text-secondary">Interests</label>
           <div className="flex flex-wrap gap-2">
             {interests.map((interest) => (
               <button
@@ -118,8 +118,8 @@ export default function Step2Audience() {
                 onClick={() => toggleInterest(interest)}
                 className={`rounded-full px-4 py-2 text-sm transition-colors ${
                   campaignData.targetAudience.interests.includes(interest)
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-primary-600 text-text-inverse'
+                    : 'bg-surface-100 text-text-secondary hover:bg-surface-200'
                 }`}
               >
                 {interest}
@@ -129,7 +129,7 @@ export default function Step2Audience() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">Locations</label>
+          <label className="mb-2 block text-sm font-medium text-text-secondary">Locations</label>
           <div className="flex flex-wrap gap-2">
             {locations.map((location) => (
               <button
@@ -139,8 +139,8 @@ export default function Step2Audience() {
                 onClick={() => toggleLocation(location)}
                 className={`rounded-full px-4 py-2 text-sm transition-colors ${
                   campaignData.targetAudience.locations.includes(location)
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-primary-600 text-text-inverse'
+                    : 'bg-surface-100 text-text-secondary hover:bg-surface-200'
                 }`}
               >
                 {location}
@@ -154,7 +154,7 @@ export default function Step2Audience() {
         <button
           type="button"
           onClick={prevStep}
-          className="w-full sm:w-auto rounded-full border-2 border-gray-300 px-6 py-3 font-semibold text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="w-full sm:w-auto rounded-full border-2 border-surface-300 px-6 py-3 font-semibold text-text-secondary transition-colors hover:bg-surface-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
           Back
         </button>
@@ -162,7 +162,7 @@ export default function Step2Audience() {
           type="button"
           onClick={nextStep}
           disabled={!campaignData.name || campaignData.targetAudience.interests.length === 0}
-          className="w-full sm:w-auto rounded-full bg-indigo-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="w-full sm:w-auto rounded-full bg-primary-600 px-6 py-3 font-semibold text-text-inverse transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-surface-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
           Continue
         </button>

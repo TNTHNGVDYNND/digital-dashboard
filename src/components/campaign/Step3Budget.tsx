@@ -48,8 +48,8 @@ export default function Step3Budget() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Set Budget & Reach</h2>
-      <p className="text-gray-600">Choose your campaign tier and budget.</p>
+      <h2 className="text-2xl font-bold text-text-primary">Set Budget & Reach</h2>
+      <p className="text-text-secondary">Choose your campaign tier and budget.</p>
 
       <div className="grid gap-6 md:grid-cols-3">
         {tiers.map((tier) => (
@@ -65,8 +65,8 @@ export default function Step3Budget() {
         ))}
       </div>
 
-      <div className="rounded-xl bg-gray-50 p-6">
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+      <div className="rounded-xl bg-surface-50 p-6">
+        <label className="mb-2 block text-sm font-medium text-text-secondary">
           Campaign Duration (days)
         </label>
         <input
@@ -76,19 +76,19 @@ export default function Step3Budget() {
           max="90"
           value={campaignData.duration}
           onChange={(e) => updateCampaignData({ duration: parseInt(e.target.value) })}
-          className="w-full accent-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="w-full accent-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         />
-        <div className="mt-2 text-center font-semibold text-indigo-600">
+        <div className="mt-2 text-center font-semibold text-primary-600">
           {campaignData.duration} days
         </div>
       </div>
 
-      <div className="rounded-xl border-2 border-indigo-200 bg-indigo-50 p-6">
-        <h3 className="mb-2 text-lg font-semibold text-gray-900">Estimated Reach</h3>
-        <div className="text-4xl font-bold text-indigo-600">
+      <div className="rounded-xl border-2 border-primary-200 bg-primary-50 p-6">
+        <h3 className="mb-2 text-lg font-semibold text-text-primary">Estimated Reach</h3>
+        <div className="text-4xl font-bold text-primary-600">
           {estimatedReach.toLocaleString()} people
         </div>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-text-secondary">
           Based on your {campaignData.tier} tier selection
         </p>
       </div>
@@ -97,14 +97,14 @@ export default function Step3Budget() {
         <button
           type="button"
           onClick={prevStep}
-          className="w-full sm:w-auto rounded-full border-2 border-gray-300 px-6 py-3 font-semibold text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="w-full sm:w-auto rounded-full border-2 border-surface-300 px-6 py-3 font-semibold text-text-secondary transition-colors hover:bg-surface-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
           Back
         </button>
         <button
           type="button"
           onClick={nextStep}
-          className="w-full sm:w-auto rounded-full bg-indigo-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="w-full sm:w-auto rounded-full bg-primary-600 px-6 py-3 font-semibold text-text-inverse transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
           Review Campaign
         </button>

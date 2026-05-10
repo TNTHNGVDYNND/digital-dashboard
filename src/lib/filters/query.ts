@@ -69,7 +69,9 @@ export function deriveFilterClauses(query: FilterQuery): FilterClause[] {
  * Process a raw query string: parse, validate, canonicalize, derive filters.
  * Returns null if the query is malformed, oversized, or has invalid date ranges.
  */
-export function processFilterQuery(query: string): { canonical: string; filters: FilterClause[] } | null {
+export function processFilterQuery(
+  query: string,
+): { canonical: string; filters: FilterClause[] } | null {
   if (query.length > 512) return null;
 
   const parsed = parseFilterQuery(query);
