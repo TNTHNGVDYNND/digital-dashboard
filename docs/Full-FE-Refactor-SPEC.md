@@ -1,7 +1,4 @@
-@import 'tailwindcss';
-That's it. No @theme directives, no design tokens, no responsive breakpoints, no custom utilities, no component layer styles. For Tailwind v4.2.2, this is like having a Ferrari with no paint
-
----
+# Testing SPEC
 
 Skill Chain Reaction for: "Plan a frontend styling refactor"
 Based on your SYSTEM-OVERVIEW.md v2.1.2 architecture, here's how the skill chain would fire:

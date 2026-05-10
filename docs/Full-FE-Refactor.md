@@ -1,7 +1,4 @@
-# Full Frontend Styling Refactor — v2.1.2 Skill Chain Prompt
-
-> **COPY THIS ENTIRE DOCUMENT** into a new OpenCode session and submit as your first message.
-> The orchestrator will handle the rest, pausing at every gate for your approval.
+# Full Frontend Styling Refactor — v2.1.2 Skill Chain Prompt Testing
 
 ---
 
@@ -11,6 +8,7 @@
 I am requesting a full frontend styling refactor for my Next.js project `digital-dashboard` using the v2.1.2 Sisyphus planning workflow with all governance gates enabled.
 
 **Current State:**
+
 - Project: `/home/vladi/developer/digital-dashboard`
 - Framework: Next.js 16.x with App Router
 - Styling: Tailwind CSS v4.2.2 (latest)
@@ -19,6 +17,7 @@ I am requesting a full frontend styling refactor for my Next.js project `digital
 
 **Desired Outcome:**
 A complete design system implemented in `globals.css` using Tailwind v4 `@theme` directives, including:
+
 1. Color tokens (primary, surface, text, accent)
 2. Spacing scale
 3. Typography tokens
@@ -28,6 +27,7 @@ A complete design system implemented in `globals.css` using Tailwind v4 `@theme`
 7. Component migration strategy: hardcoded styles in existing components migrated to theme tokens
 
 **Constraints:**
+
 - Do NOT break existing GSAP ScrollTrigger animations
 - Do NOT break Three.js canvas rendering
 - Must pass `npm run build` after every wave
@@ -40,6 +40,7 @@ A complete design system implemented in `globals.css` using Tailwind v4 `@theme`
 **Run the complete v2.1.2 workflow from Phase 1 through Phase 10.**
 
 **Mandatory requirements:**
+
 - **STOP at every gate** and present the artifact for my approval
 - **Do NOT proceed** to the next phase until I explicitly type "approved" or "continue"
 - **Use the correct category/model** for each phase per SYSTEM-OVERVIEW.md v2.1.2
@@ -52,6 +53,7 @@ A complete design system implemented in `globals.css` using Tailwind v4 `@theme`
 ## Phase-by-Phase Breakdown
 
 ### Phase 1: Discovery (if needed)
+
 ```
 Skill: discovery-orchestrator
 Category: deep (GPT-5.4)
@@ -61,6 +63,7 @@ Gate: Checkpoint 1 — Brief validated? STOP for my approval.
 ```
 
 ### Phase 2: Brief Loader
+
 ```
 Skill: brief-loader
 Category: orchestration
@@ -70,6 +73,7 @@ Gate: Checkpoint 2 — STOP for my approval.
 ```
 
 ### Phase 3: PRD Writer
+
 ```
 Skill: prd-writer
 Category: deep (GPT-5.4)
@@ -88,6 +92,7 @@ Gate: STOP for my approval before Momus review.
 ```
 
 ### Gate 1: Momus PRD Review (MANDATORY)
+
 ```
 Skill: momus-prd-reviewer
 Category: deep (GPT-5.4)
@@ -102,6 +107,7 @@ DO NOT proceed if FAIL.
 ```
 
 ### Phase 4: Issue Creator
+
 ```
 Skill: issue-creator
 Category: orchestration
@@ -118,6 +124,7 @@ Gate: STOP for my approval.
 ```
 
 ### Phase 5: Plan Writer
+
 ```
 Skill: plan-writer
 Category: orchestration
@@ -132,6 +139,7 @@ Gate: STOP for my approval before Momus review.
 ```
 
 ### Gate 2: Momus Plan Review (MANDATORY)
+
 ```
 Skill: momus-plan-reviewer
 Category: deep (GPT-5.4)
@@ -146,6 +154,7 @@ DO NOT proceed if FAIL.
 ```
 
 ### Phase 6: Wave Executor — Wave 1
+
 ```
 Skill: wave-executor
 Category: orchestration (kimi-k2.6)
@@ -162,6 +171,7 @@ Gate: STOP. Present wave summary. I approve "continue" or "fix".
 ```
 
 ### Phase 6: Wave Executor — Wave 2
+
 ```
 Skill: wave-executor
 Category: orchestration (kimi-k2.6)
@@ -179,6 +189,7 @@ Gate: STOP. Present wave summary. I approve "continue" or "fix".
 ```
 
 ### Phase 6: Wave Executor — Wave 3
+
 ```
 Skill: wave-executor
 Category: orchestration (kimi-k2.6)
@@ -195,6 +206,7 @@ Gate: STOP. Present wave summary. I approve "continue" or "fix".
 ```
 
 ### Phase 6: Wave Executor — Wave 4
+
 ```
 Skill: wave-executor
 Category: orchestration (kimi-k2.6)
@@ -212,6 +224,7 @@ Gate: STOP. Present wave summary. I approve "continue" or "fix".
 ```
 
 ### Phase 6: Wave Executor — Wave 5
+
 ```
 Skill: wave-executor
 Category: orchestration (kimi-k2.6)
@@ -229,6 +242,7 @@ Gate: STOP. Present wave summary. I approve "continue" or "fix".
 ```
 
 ### Regression Gate (Between Waves)
+
 ```
 Skill: regression-gate
 Category: unspecified-low (GLM-5.1)
@@ -238,6 +252,7 @@ Expected output: PASS / FAIL — no breakage in existing features
 ```
 
 ### Phase 7: Plan Updater
+
 ```
 Skill: plan-updater
 Category: orchestration
@@ -247,6 +262,7 @@ Gate: STOP for my review of progress log.
 ```
 
 ### Phase 8: Plan Closer
+
 ```
 Skill: plan-closer
 Category: orchestration
@@ -259,6 +275,7 @@ Gate: STOP for my final approval to close.
 ```
 
 ### Phase 9: Security Auditor (Optional but Recommended)
+
 ```
 Skill: security-auditor
 Category: automatic
@@ -268,6 +285,7 @@ Expected output: PASS / WARNING / FAIL
 ```
 
 ### Phase 10: Vault Ops (Publishing)
+
 ```
 Skill: vault-ops
 Category: unspecified-low (GLM-5.1)
@@ -280,6 +298,7 @@ Artifacts: Wiki page updated with styling refactor learnings
 ## My Approval Checkpoints
 
 I will explicitly approve at these gates by typing one of:
+
 - `"approved"` — proceed to next phase
 - `"approved with override"` — proceed despite warnings
 - `"fix"` — address blockers and re-present
@@ -293,6 +312,7 @@ I will explicitly approve at these gates by typing one of:
 ## Context Files to Read First
 
 The orchestrator should read these before starting:
+
 1. `/home/vladi/.config/opencode/SYSTEM-OVERVIEW.md` — workflow reference
 2. `/home/vladi/developer/digital-dashboard/src/app/globals.css` — current (empty) state
 3. `/home/vladi/developer/digital-dashboard/AGENTS.md` — project context
@@ -316,5 +336,5 @@ The orchestrator should read these before starting:
 
 ---
 
-*Session starter: Paste this entire document as your first message.*
-*Expected behavior: Orchestrator pauses at Phase 1, asks for approval before proceeding.*
+_Session starter: Paste this entire document as your first message._
+_Expected behavior: Orchestrator pauses at Phase 1, asks for approval before proceeding._
