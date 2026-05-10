@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
 import LogoutButton from './LogoutButton';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 export default async function Navbar() {
   // Force dynamic rendering on Vercel to prevent auth state caching
@@ -26,6 +27,7 @@ export default async function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           {session ? (
             <>
               <Link
