@@ -1,0 +1,45 @@
+Build output for Wave 4 (SF-005 GSAP/Three.js Integration Verification)
+Date: 2026-05-10
+Command: npm run build
+
+Output:
+▲ Next.js 16.2.6 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.1s
+  Running TypeScript ...
+  Finished TypeScript in 5.0s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/14) ...
+  Generating static pages using 11 workers (3/14)
+  Generating static pages using 11 workers (6/14)
+  Generating static pages using 11 workers (10/14)
+✓ Generating static pages using 11 workers (14/14) in 328ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /api/admin/migrate
+├ ƒ /api/auth/[...nextauth]
+├ ƒ /api/auth/register
+├ ƒ /api/campaigns
+├ ƒ /api/campaigns/[id]
+├ ƒ /api/filters
+├ ƒ /api/filters/[id]
+├ ƒ /api/templates
+├ ƒ /api/templates/[id]
+├ ƒ /campaigns
+├ ƒ /contact
+├ ƒ /dashboard
+├ ƒ /faq
+├ ƒ /login
+└ ƒ /register
+
+ƒ Proxy (Middleware)
+
+ƒ  (Dynamic)  server-rendered on demand
+
+Result: PASS — 0 errors, 0 TypeScript errors
